@@ -2,6 +2,7 @@ export const ROUTES = {
   HOME: '/',
   FEATURES: '/features',
   HOW_IT_WORKS: '/how-it-works',
+  PRICING: '/pricing',
   SECURITY: '/security',
   ABOUT: '/about',
   CONTACT: '/contact',
@@ -24,6 +25,7 @@ export const ROUTES = {
   PROJECTS: '/app/projects',
   TEAM: '/app/team',
   INTEGRATIONS: '/app/integrations',
+  BILLING: '/app/billing',
   SETTINGS: '/app/settings',
   DESIGN_SYSTEM: '/app/design-system',
 } as const;

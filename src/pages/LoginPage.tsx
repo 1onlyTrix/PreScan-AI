@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Sparkles, ArrowLeft, Shield, Eye, EyeOff, Lock, AlertCircle, ArrowRight, Mail, RefreshCw } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
@@ -6,7 +6,6 @@ import { Card, CardContent, CardFooter } from '../components/ui/Card';
 import { Alert } from '../components/ui/Alert';
 import { useAuth } from '../context/AuthContext';
 import { ROUTES } from '../router/routes';
-import { supabase, signInWithGoogle } from '../supabaseClient';
 
 interface LoginPageProps {
   onNavigate: (route: string) => void;
@@ -14,38 +13,20 @@ interface LoginPageProps {
 }
 
 export const LoginPage: React.FC<LoginPageProps> = ({ onNavigate, returnTo }) => {
-  const { loginWithGoogle } = useAuth();
+  const { login, loginWithGoogle } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const params = new URLSearchParams(window.location.search);
-      const paramEmail = params.get('email');
-      const isRegistered = params.get('registered') === 'true' || params.get('signup') === 'success';
-
-      if (paramEmail) {
-        setEmail(paramEmail);
-      }
-      if (isRegistered) {
-        setSuccessMessage('Your account has been created. Please check your email and verify your address before logging in.');
-      }
-    }
-  }, []);
 
   const handleGoogleLogin = async () => {
     try {
       setGoogleLoading(true);
       setError(null);
-      const { error: supabaseError } = await signInWithGoogle();
-      if (supabaseError) {
-        setError(supabaseError.message);
-      }
+      await loginWithGoogle();
+      onNavigate(ROUTES.DASHBOARD);
     } catch (err: any) {
       setError(err.message || 'Unable to sign in with Google. Please try again.');
     } finally {
@@ -64,21 +45,13 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onNavigate, returnTo }) =>
       setLoading(true);
       setError(null);
 
-      const { data, error: supabaseError } = await supabase.auth.signInWithPassword({
+      await login({
         email: email.trim(),
         password,
       });
 
-      if (supabaseError) {
-        setError(supabaseError.message);
-        return;
-      }
-
-      if (data?.session) {
-        onNavigate(ROUTES.HOME);
-      } else {
-        setError('Check your email and confirm your account before logging in.');
-      }
+      // Login ALWAYS goes directly to Dashboard
+      onNavigate(returnTo || ROUTES.DASHBOARD);
     } catch (err: any) {
       setError(err.message || 'Unable to sign in. Please check your credentials and try again.');
     } finally {
@@ -111,12 +84,6 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onNavigate, returnTo }) =>
             Access your creator QA workspace, upload reviews, and policy reports.
           </p>
         </div>
-
-        {successMessage && (
-          <Alert variant="success" title="Account Created">
-            {successMessage}
-          </Alert>
-        )}
 
         {error && (
           <Alert variant="error" title="Authentication Error">

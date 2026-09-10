@@ -33,8 +33,11 @@ import { Badge } from '../components/ui/Badge';
 import { Breadcrumb } from '../components/ui/Breadcrumb';
 import { ScanSourceType } from '../types/models';
 import { ScanService, YouTubeValidationResponse } from '../services/scan.service';
+import { BillingService } from '../services/billing.service';
+import { BillingSummary } from '../types/billing';
 import { useAuth } from '../context/AuthContext';
 import { ROUTES } from '../router/routes';
+import { UpgradeModal } from '../components/billing/UpgradeModal';
 
 interface NewScanPageProps {
   onNavigate: (route: string) => void;
@@ -46,6 +49,11 @@ const MAX_SIZE_MB = 500;
 export const NewScanPage: React.FC<NewScanPageProps> = ({ onNavigate }) => {
   const { organization } = useAuth();
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Billing & Metering state
+  const [billingSummary, setBillingSummary] = useState<BillingSummary | null>(null);
+  const [isUpgradeModalOpen, setIsUpgradeModalOpen] = useState(false);
+  const [limitTriggerReason, setLimitTriggerReason] = useState<string | undefined>(undefined);
 
   // Source Selection: 'file' | 'youtube_url' | 'youtube_connection'
   const [sourceType, setSourceType] = useState<ScanSourceType>('youtube_url');
@@ -82,6 +90,33 @@ export const NewScanPage: React.FC<NewScanPageProps> = ({ onNavigate }) => {
   // Submission Status
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submissionError, setSubmissionError] = useState<string | null>(null);
+
+  // Load Billing Summary on mount & workspace change
+  useEffect(() => {
+    if (!organization?.id) return;
+    let isMounted = true;
+    BillingService.getBillingSummary(organization.id)
+      .then((sum) => {
+        if (isMounted) setBillingSummary(sum);
+      })
+      .catch((err) => {
+        console.error('Failed to fetch billing summary for new scan:', err);
+      });
+    return () => {
+      isMounted = false;
+    };
+  }, [organization?.id]);
+
+  // Check if scan limit reached
+  const isScanLimitReached = (billingSummary?.usage.remainingScans ?? 1) <= 0;
+
+  // Check if duration exceeds limit
+  const parsedDuration = parseFloat(durationMinutes);
+  const isDurationExceeded =
+    !isNaN(parsedDuration) &&
+    parsedDuration > 0 &&
+    billingSummary?.limits.maxVideoDurationMinutes &&
+    parsedDuration > billingSummary.limits.maxVideoDurationMinutes;
 
   // Validate YouTube URL with server endpoint
   const validateAndFetchYouTubeInfo = async (urlToValidate: string) => {
@@ -303,10 +338,92 @@ export const NewScanPage: React.FC<NewScanPageProps> = ({ onNavigate }) => {
         }
       />
 
+      {/* Workspace Plan & Quota Status Bar */}
+      {billingSummary && (
+        <div className="p-4 rounded-xl bg-white border border-neutral-200/90 shadow-2xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <span className="p-2 rounded-lg bg-neutral-900 text-white shrink-0">
+              <Film className="w-4 h-4 text-emerald-400" />
+            </span>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-bold text-neutral-900">
+                  {billingSummary.plan.name} Plan Quota:
+                </span>
+                <span className="text-xs font-bold text-neutral-700">
+                  {billingSummary.usage.remainingScans} of {billingSummary.usage.scanLimit} scans remaining
+                </span>
+                <span className="text-[11px] text-neutral-400">
+                  (Max {billingSummary.limits.maxVideoDurationMinutes} min per video)
+                </span>
+              </div>
+              <span className="text-[11px] text-neutral-500 block">
+                Usage period resets on {new Date(billingSummary.usage.periodEnd).toLocaleDateString()}
+              </span>
+            </div>
+          </div>
+
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => {
+              setLimitTriggerReason('Workspace Scan Capacity');
+              setIsUpgradeModalOpen(true);
+            }}
+            rightIcon={<Sparkles className="w-3.5 h-3.5 text-neutral-600" />}
+          >
+            Manage Capacity
+          </Button>
+        </div>
+      )}
+
+      {/* Quota Exceeded Block */}
+      {isScanLimitReached && (
+        <div className="p-5 rounded-2xl bg-amber-50 border border-amber-200 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="w-5 h-5 text-amber-700 shrink-0 mt-0.5" />
+            <div>
+              <h4 className="text-sm font-bold text-amber-950">
+                Monthly Scan Limit Reached ({billingSummary?.usage.scansUsed} / {billingSummary?.usage.scanLimit} scans)
+              </h4>
+              <p className="text-xs text-amber-800 mt-0.5 leading-relaxed">
+                Your workspace has utilized all included scans for the current cycle. Upgrade your plan to unlock more pre-upload video scans immediately.
+              </p>
+            </div>
+          </div>
+          <Button
+            variant="primary"
+            size="sm"
+            className="shrink-0 bg-neutral-900 text-white hover:bg-neutral-800"
+            onClick={() => {
+              setLimitTriggerReason('Monthly Scan Quota Exceeded');
+              setIsUpgradeModalOpen(true);
+            }}
+          >
+            Upgrade Plan
+          </Button>
+        </div>
+      )}
+
       {/* Submission Error Banner */}
       {submissionError && (
         <Alert variant="error" title="Could Not Initiate Scan">
-          <div>{submissionError}</div>
+          <div className="space-y-2">
+            <div>{submissionError}</div>
+            {submissionError.toLowerCase().includes('limit') && (
+              <Button
+                variant="outline"
+                size="sm"
+                className="mt-2 bg-white"
+                onClick={() => {
+                  setLimitTriggerReason('Scan Limit Error');
+                  setIsUpgradeModalOpen(true);
+                }}
+              >
+                View Upgrade Options
+              </Button>
+            )}
+          </div>
         </Alert>
       )}
 
@@ -865,8 +982,29 @@ export const NewScanPage: React.FC<NewScanPageProps> = ({ onNavigate }) => {
                     placeholder="e.g., 14"
                     value={durationMinutes}
                     onChange={(e) => setDurationMinutes(e.target.value)}
-                    helperText="Synchronized automatically during media stream analysis"
+                    helperText={
+                      billingSummary
+                        ? `Plan duration limit: up to ${billingSummary.limits.maxVideoDurationMinutes} minutes`
+                        : 'Synchronized automatically during media stream analysis'
+                    }
                   />
+                  {isDurationExceeded && (
+                    <div className="mt-2 p-2.5 rounded-lg bg-amber-50 border border-amber-200 text-xs text-amber-800 flex items-start justify-between gap-2">
+                      <span>
+                        Video exceeds your {billingSummary?.plan.name} plan max duration of {billingSummary?.limits.maxVideoDurationMinutes} min.
+                      </span>
+                      <button
+                        type="button"
+                        className="font-bold text-amber-900 underline shrink-0 hover:text-black"
+                        onClick={() => {
+                          setLimitTriggerReason('Video Duration Limit');
+                          setIsUpgradeModalOpen(true);
+                        }}
+                      >
+                        Upgrade Plan
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
             </CardContent>
@@ -961,7 +1099,9 @@ export const NewScanPage: React.FC<NewScanPageProps> = ({ onNavigate }) => {
                 Run PreScan Ingestion
               </h4>
               <p className="text-xs text-neutral-500 mt-1">
-                {sourceType === 'youtube_url'
+                {isScanLimitReached
+                  ? 'Monthly scan quota limit reached. Please upgrade to scan.'
+                  : sourceType === 'youtube_url'
                   ? validatedVideoId
                     ? 'YouTube link structure validated. Ready to queue ingestion.'
                     : 'Enter a valid YouTube video link to enable scan.'
@@ -985,13 +1125,15 @@ export const NewScanPage: React.FC<NewScanPageProps> = ({ onNavigate }) => {
                   <Play className="w-4 h-4 fill-current" />
                 )
               }
-              disabled={!isCtaReady() || isSubmitting}
+              disabled={!isCtaReady() || isSubmitting || isScanLimitReached}
               onClick={handleSubmitScan}
             >
               {isSubmitting
                 ? uploadProgress !== null
                   ? `Uploading (${uploadProgress}%)...`
                   : 'Starting Ingestion Pipeline...'
+                : isScanLimitReached
+                ? 'Scan Quota Reached'
                 : sourceType === 'youtube_url'
                 ? validatedVideoId
                   ? 'Queue YouTube Link Scan'
@@ -1014,6 +1156,18 @@ export const NewScanPage: React.FC<NewScanPageProps> = ({ onNavigate }) => {
           </div>
         </div>
       </div>
+
+      {/* Upgrade Modal */}
+      <UpgradeModal
+        isOpen={isUpgradeModalOpen}
+        onClose={() => setIsUpgradeModalOpen(false)}
+        onSuccess={() => {
+          if (organization?.id) {
+            BillingService.getBillingSummary(organization.id).then((s) => setBillingSummary(s));
+          }
+        }}
+        triggerReason={limitTriggerReason}
+      />
     </div>
   );
 };

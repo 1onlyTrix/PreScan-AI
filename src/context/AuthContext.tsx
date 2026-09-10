@@ -2,7 +2,6 @@ import React, { createContext, useContext, useState, useEffect, ReactNode, useCa
 import { User, Organization, Membership } from '../types';
 import { AuthStatus, OnboardingState, AuthContextType, WorkspaceWithRole } from '../types/auth';
 import { getStoredWorkspaceId, setStoredWorkspaceId, setStoredToken } from '../lib/api';
-import { supabase } from '../supabaseClient';
 
 const DEMO_SESSION_KEY = 'prescan_demo_session';
 const DEMO_ONBOARDING_KEY = 'prescan_demo_onboarding_db';
@@ -76,58 +75,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const refreshSession = useCallback(async () => {
     try {
       setIsLoading(true);
-
-      const { data: { session } } = await supabase.auth.getSession();
-      if (session?.user) {
-        const email = session.user.email?.toLowerCase() || '';
-        const fullName = session.user.user_metadata?.full_name || session.user.user_metadata?.fullName || email.split('@')[0] || 'Creator';
-        const supabaseUser: User = {
-          id: session.user.id,
-          email,
-          fullName,
-          displayName: fullName,
-          emailVerified: !!session.user.email_confirmed_at,
-          createdAt: session.user.created_at || new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-        };
-
-        setUser(supabaseUser);
-        setStoredToken(session.access_token);
-
-        const wsDb = getLocalWorkspacesDB();
-        let userWorkspaces = wsDb[email] || [];
-        if (userWorkspaces.length === 0) {
-          const defaultWs: Organization = {
-            id: `ws_${session.user.id}`,
-            name: `${fullName}'s Workspace`,
-            slug: 'workspace',
-            createdById: session.user.id,
-            ownerId: session.user.id,
-            memberCount: 1,
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-          };
-          userWorkspaces = [defaultWs];
-          wsDb[email] = userWorkspaces;
-          saveLocalWorkspacesDB(wsDb);
-        }
-
-        const activeWorkspace = userWorkspaces[0];
-        setOrganization(activeWorkspace);
-        setStoredWorkspaceId(activeWorkspace.id);
-        setWorkspaces(userWorkspaces.map(w => ({ ...w, role: 'OWNER' })));
-        setMembership({
-          id: `mem_${session.user.id}`,
-          userId: session.user.id,
-          organizationId: activeWorkspace.id,
-          role: 'OWNER',
-          joinedAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-        });
-        setAuthStatus('AUTHENTICATED_READY');
-        setIsLoading(false);
-        return;
-      }
 
       const rawSession = localStorage.getItem(DEMO_SESSION_KEY);
       if (!rawSession) {
@@ -225,14 +172,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   useEffect(() => {
     refreshSession();
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(() => {
-      refreshSession();
-    });
-
-    return () => {
-      subscription.unsubscribe();
-    };
   }, [refreshSession]);
 
   const switchWorkspace = async (workspaceId: string) => {
@@ -346,13 +285,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   };
 
   const loginWithGoogle = async () => {
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        redirectTo: typeof window !== 'undefined' ? window.location.origin : undefined,
-      },
-    });
-    if (error) throw error;
+    // Instant demo login with sample Google creator account
+    await login({ email: 'creator.demo@prescan.local', password: 'demopassword' });
   };
 
   const signup = async (payload: { fullName?: string; email: string; password?: string; termsAccepted?: boolean }) => {
@@ -405,7 +339,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const logout = async () => {
     try {
-      await supabase.auth.signOut();
       localStorage.removeItem(DEMO_SESSION_KEY);
       setStoredToken(null);
       setStoredWorkspaceId(null);

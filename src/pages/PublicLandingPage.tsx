@@ -445,6 +445,31 @@ export const PublicLandingPage: React.FC<PublicLandingPageProps> = ({ onNavigate
         </div>
       </section>
 
+      {/* 12. PRICING TEASER */}
+      <section className="py-16 sm:py-24 border-b border-neutral-200/80 bg-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center space-y-6">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-neutral-100 text-neutral-800">
+            <span>Simple Pricing</span>
+          </div>
+          <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-neutral-900">
+            Start scanning free. Upgrade as you scale.
+          </h2>
+          <p className="text-sm sm:text-base text-neutral-600 max-w-xl mx-auto">
+            From solo creators pre-screening 3 videos a month to production studios scanning 100+ long-form podcasts.
+          </p>
+          <div className="pt-2">
+            <Button
+              variant="primary"
+              size="lg"
+              onClick={() => onNavigate(ROUTES.PRICING)}
+              rightIcon={<ArrowRight className="w-4 h-4" />}
+            >
+              View all plans and capacity limits
+            </Button>
+          </div>
+        </div>
+      </section>
+
       {/* 13. FAQ SECTION */}
       <section className="py-16 sm:py-24 border-b border-neutral-200/80 bg-neutral-50/40">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 space-y-8">

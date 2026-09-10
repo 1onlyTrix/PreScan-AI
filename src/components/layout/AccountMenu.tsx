@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { User, LogOut, Settings, Shield, Sparkles, CheckCircle2, ShieldAlert } from 'lucide-react';
+import { User, LogOut, Settings, CreditCard, Shield, Sparkles, CheckCircle2, ShieldAlert } from 'lucide-react';
 import { cn } from '../../utils/cn';
 import { useAuth } from '../../context/AuthContext';
 import { ROUTES } from '../../router/routes';
@@ -81,6 +81,17 @@ export const AccountMenu: React.FC<AccountMenuProps> = ({ onNavigate }) => {
             >
               <Settings className="w-3.5 h-3.5 text-neutral-500" />
               <span>Profile & Workspace Settings</span>
+            </button>
+
+            <button
+              onClick={() => {
+                setIsOpen(false);
+                onNavigate?.(ROUTES.BILLING);
+              }}
+              className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-md text-xs font-medium text-neutral-700 hover:bg-neutral-100 hover:text-neutral-900 transition-colors text-left"
+            >
+              <CreditCard className="w-3.5 h-3.5 text-neutral-500" />
+              <span>Billing & Subscription</span>
             </button>
 
             <button
