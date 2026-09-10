@@ -51,15 +51,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onNavigate, initialEmail, 
     try {
       setGoogleLoading(true);
       setError(null);
-      const { data, error: oauthError } = await supabase.auth.signInWithOAuth({
-        provider: 'google',
-        options: {
-          redirectTo: typeof window !== 'undefined' ? `${window.location.origin}/` : undefined,
-        },
-      });
-      if (oauthError) {
-        throw oauthError;
-      }
+      await loginWithGoogle();
     } catch (err: any) {
       setError(err?.message || 'Unable to sign in with Google. Please try again.');
     } finally {
@@ -78,24 +70,18 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onNavigate, initialEmail, 
       setLoading(true);
       setError(null);
 
-      const { data, error: signInError } = await supabase.auth.signInWithPassword({
+      const res = await login({
         email: email.trim(),
         password,
       });
 
-      if (signInError) {
-        setError(signInError.message || 'Unable to sign in. Please check your credentials and try again.');
-        return;
+      if (returnTo && returnTo.startsWith('/app')) {
+        onNavigate(returnTo);
+      } else if (res.isCompleted) {
+        onNavigate(ROUTES.DASHBOARD);
+      } else {
+        onNavigate(ROUTES.ONBOARDING);
       }
-
-      // Only redirect when a real session exists after login
-      if (!data?.session) {
-        setError('Check your email and confirm your account before logging in.');
-        return;
-      }
-
-      // Redirect the user to the Home page ("/")
-      onNavigate(ROUTES.HOME);
     } catch (err: any) {
       setError(err?.message || 'Unable to sign in. Please check your credentials and try again.');
     } finally {

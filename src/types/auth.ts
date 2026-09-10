@@ -36,7 +36,7 @@ export interface AuthContextType {
   onboarding: OnboardingState | null;
   authStatus: AuthStatus;
   isLoading: boolean;
-  login: (credentials: { email: string; password?: string }) => Promise<{ unverified?: boolean; email?: string }>;
+  login: (credentials: { email: string; password?: string }) => Promise<{ unverified?: boolean; email?: string; isCompleted?: boolean }>;
   loginWithGoogle: () => Promise<void>;
   signInWithGoogle: () => Promise<void>;
   signup: (payload: { fullName: string; email: string; password?: string; termsAccepted: boolean }) => Promise<void>;

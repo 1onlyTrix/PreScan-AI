@@ -42,19 +42,6 @@ export function getStoredToken(): string | null {
     if (typeof window === 'undefined') return null;
     const directToken = localStorage.getItem(TOKEN_STORAGE_KEY);
     if (directToken && directToken.trim()) return directToken.trim();
-
-    // Support demo session persistence
-    const demoSessionStr = localStorage.getItem('prescan_demo_session');
-    if (demoSessionStr) {
-      try {
-        const demoUser = JSON.parse(demoSessionStr);
-        if (demoUser?.email) {
-          return `demo_${demoUser.email}`;
-        }
-      } catch {
-        // ignore parse error
-      }
-    }
     return null;
   } catch {
     return null;

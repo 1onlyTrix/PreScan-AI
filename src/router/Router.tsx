@@ -46,10 +46,16 @@ export const Router: React.FC = () => {
       const pathname = window.location.pathname;
       const search = window.location.search || '';
       const hash = window.location.hash || '';
+
+      // Check if this is an OAuth callback return from Supabase
+      if (pathname.includes('/auth/callback') || hash.includes('access_token=') || search.includes('code=')) {
+        return ROUTES.AUTH_CALLBACK;
+      }
+
       if (pathname && pathname !== '/') {
         return `${pathname}${search}${hash}`;
       }
-      if (hash) {
+      if (hash && !hash.includes('access_token=')) {
         return hash.replace('#', '');
       }
     }
@@ -78,20 +84,49 @@ export const Router: React.FC = () => {
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
+  // Clean up OAuth hash tokens from browser URL once parsed by Supabase
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.location.hash.includes('access_token=')) {
+      window.history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
+  }, []);
+
   // Extract base route path without query params or hash fragment for matching
   const routePath = currentRoute.split('?')[0].split('#')[0];
 
-  // Protect private pages with supabase.auth.getSession() — if no session, redirect to /login
+  // Auto-route authenticated users when they land on root or auth routes
   useEffect(() => {
-    const isPrivate = routePath.startsWith('/app') || routePath === ROUTES.ONBOARDING;
-    if (isPrivate) {
-      supabase.auth.getSession().then(({ data: { session } }: any) => {
-        if (!session) {
-          navigate(ROUTES.LOGIN);
-        }
-      });
+    if (isLoading) return;
+
+    if (authStatus === 'AUTHENTICATED_READY') {
+      if (
+        routePath === ROUTES.HOME ||
+        routePath === ROUTES.LOGIN ||
+        routePath === ROUTES.SIGNUP ||
+        routePath === ROUTES.ONBOARDING ||
+        routePath === ROUTES.AUTH_CALLBACK ||
+        routePath === ROUTES.VERIFY_EMAIL
+      ) {
+        navigate(ROUTES.DASHBOARD);
+      }
+    } else if (authStatus === 'AUTHENTICATED_ONBOARDING') {
+      if (
+        routePath === ROUTES.HOME ||
+        routePath === ROUTES.LOGIN ||
+        routePath === ROUTES.SIGNUP ||
+        routePath === ROUTES.AUTH_CALLBACK ||
+        routePath.startsWith('/app')
+      ) {
+        navigate(ROUTES.ONBOARDING);
+      }
+    } else if (authStatus === 'UNAUTHENTICATED') {
+      if (routePath.startsWith('/app') || routePath === ROUTES.ONBOARDING) {
+        navigate(ROUTES.LOGIN);
+      } else if (routePath === ROUTES.AUTH_CALLBACK) {
+        navigate(ROUTES.LOGIN);
+      }
     }
-  }, [routePath]);
+  }, [authStatus, isLoading, routePath]);
 
   // Global Loading Splash during initial auth verification
   if (isLoading) {
@@ -115,8 +150,35 @@ export const Router: React.FC = () => {
     return <AccountSuspendedPage onNavigate={navigate} />;
   }
 
+  // OAuth Callback Route Fallback view while syncing
+  if (routePath === ROUTES.AUTH_CALLBACK) {
+    return (
+      <div className="min-h-screen bg-neutral-50 flex flex-col justify-center items-center p-4">
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-neutral-900 text-white flex items-center justify-center font-bold text-base shadow-sm">
+            <Sparkles className="w-5 h-5 text-emerald-400" />
+          </div>
+          <div className="flex items-center gap-2 text-xs font-medium text-neutral-500">
+            <Loader2 className="w-4 h-4 animate-spin text-neutral-600" />
+            <span>Completing authentication & loading workspace...</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   // 1. Standalone Public Marketing Pages
   if (routePath === ROUTES.HOME || routePath === '') {
+    if (authStatus === 'AUTHENTICATED_READY') {
+      return (
+        <AppShell currentRoute={ROUTES.DASHBOARD} onNavigate={navigate}>
+          <DashboardPage onNavigate={navigate} />
+        </AppShell>
+      );
+    }
+    if (authStatus === 'AUTHENTICATED_ONBOARDING') {
+      return <OnboardingPage onNavigate={navigate} />;
+    }
     return <PublicLandingPage onNavigate={navigate} />;
   }
   if (routePath === ROUTES.FEATURES) {
@@ -146,6 +208,16 @@ export const Router: React.FC = () => {
 
   // 2. Authentication Flow Pages
   if (routePath === ROUTES.LOGIN) {
+    if (authStatus === 'AUTHENTICATED_READY') {
+      return (
+        <AppShell currentRoute={ROUTES.DASHBOARD} onNavigate={navigate}>
+          <DashboardPage onNavigate={navigate} />
+        </AppShell>
+      );
+    }
+    if (authStatus === 'AUTHENTICATED_ONBOARDING') {
+      return <OnboardingPage onNavigate={navigate} />;
+    }
     const urlParams = new URLSearchParams(currentRoute.includes('?') ? currentRoute.split('?')[1] : '');
     const prefilledEmail = urlParams.get('email') || undefined;
     const msg = urlParams.get('msg') || (urlParams.get('registered') === 'true' ? 'Your account has been created. Please check your email and verify your address before logging in.' : undefined);
@@ -153,14 +225,31 @@ export const Router: React.FC = () => {
   }
 
   if (routePath === ROUTES.SIGNUP) {
+    if (authStatus === 'AUTHENTICATED_READY') {
+      return (
+        <AppShell currentRoute={ROUTES.DASHBOARD} onNavigate={navigate}>
+          <DashboardPage onNavigate={navigate} />
+        </AppShell>
+      );
+    }
+    if (authStatus === 'AUTHENTICATED_ONBOARDING') {
+      return <OnboardingPage onNavigate={navigate} />;
+    }
     return <SignupPage onNavigate={navigate} />;
   }
 
   if (routePath === ROUTES.VERIFY_EMAIL) {
     if (authStatus === 'AUTHENTICATED_READY') {
-      return <DashboardPage onNavigate={navigate} />;
+      return (
+        <AppShell currentRoute={ROUTES.DASHBOARD} onNavigate={navigate}>
+          <DashboardPage onNavigate={navigate} />
+        </AppShell>
+      );
     }
-    return <OnboardingPage onNavigate={navigate} />;
+    if (authStatus === 'AUTHENTICATED_ONBOARDING') {
+      return <OnboardingPage onNavigate={navigate} />;
+    }
+    return <LoginPage onNavigate={navigate} />;
   }
 
   if (routePath === ROUTES.FORGOT_PASSWORD) {
@@ -188,7 +277,11 @@ export const Router: React.FC = () => {
       return <LoginPage onNavigate={navigate} returnTo={ROUTES.ONBOARDING} />;
     }
     if (authStatus === 'AUTHENTICATED_READY') {
-      return <DashboardPage onNavigate={navigate} />;
+      return (
+        <AppShell currentRoute={ROUTES.DASHBOARD} onNavigate={navigate}>
+          <DashboardPage onNavigate={navigate} />
+        </AppShell>
+      );
     }
     return <OnboardingPage onNavigate={navigate} />;
   }
