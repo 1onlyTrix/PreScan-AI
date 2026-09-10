@@ -6,7 +6,7 @@ import { Card, CardContent, CardFooter } from '../components/ui/Card';
 import { Alert } from '../components/ui/Alert';
 import { useAuth } from '../context/AuthContext';
 import { ROUTES } from '../router/routes';
-import { supabase } from '../supabaseClient';
+import { apiFetch } from '../lib/api';
 
 interface ResetPasswordPageProps {
   onNavigate: (route: string) => void;
@@ -35,12 +35,20 @@ export const ResetPasswordPage: React.FC<ResetPasswordPageProps> = ({ onNavigate
     const checkToken = async () => {
       try {
         setValidatingToken(true);
-        const { data: { session } } = await supabase.auth.getSession();
-        if (session?.user) {
-          setTokenValid(true);
-          setTokenEmail(session.user.email || '');
+
+        if (token) {
+          const res = await apiFetch(`/api/auth/validate-reset-token?token=${encodeURIComponent(token)}`);
+          const data = await res.json().catch(() => ({}));
+          if (res.ok && data.valid) {
+            setTokenValid(true);
+            setTokenEmail(data.email || '');
+          } else {
+            setTokenValid(false);
+            setTokenError(data.error || 'This password reset link is invalid or has expired.');
+          }
         } else {
-          setTokenValid(true);
+          setTokenValid(false);
+          setTokenError('No valid password reset link or token was found.');
         }
       } catch {
         setTokenValid(false);

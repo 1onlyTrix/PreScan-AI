@@ -84,7 +84,10 @@ export const Router: React.FC = () => {
     if (routePath.startsWith('/app')) {
       supabase.auth.getSession().then(({ data: { session } }) => {
         if (!session) {
-          navigate(ROUTES.LOGIN);
+          const rawDemo = localStorage.getItem('prescan_demo_session');
+          if (!rawDemo) {
+            navigate(ROUTES.LOGIN);
+          }
         }
       });
     }
