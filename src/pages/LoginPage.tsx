@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Sparkles, ArrowLeft, Shield, Eye, EyeOff, Lock, AlertCircle, ArrowRight, Mail, RefreshCw } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Sparkles, ArrowLeft, Shield, Eye, EyeOff, Lock, AlertCircle, ArrowRight, Mail, RefreshCw, MailCheck } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
 import { Card, CardContent, CardFooter } from '../components/ui/Card';
@@ -10,26 +10,58 @@ import { supabase } from '../supabaseClient';
 
 interface LoginPageProps {
   onNavigate: (route: string) => void;
+  initialEmail?: string;
+  verificationMessage?: string;
   returnTo?: string;
 }
 
-export const LoginPage: React.FC<LoginPageProps> = ({ onNavigate, returnTo }) => {
+export const LoginPage: React.FC<LoginPageProps> = ({ onNavigate, initialEmail, verificationMessage, returnTo }) => {
   const { login, loginWithGoogle } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
+  const [verificationBanner, setVerificationBanner] = useState<string | null>(verificationMessage || null);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Check URL parameters for registered email & verification message
+    const searchString = typeof window !== 'undefined' ? window.location.search : '';
+    const urlParams = new URLSearchParams(searchString);
+    const emailParam = urlParams.get('email') || initialEmail || '';
+    const isRegistered = urlParams.get('registered') === 'true' || Boolean(verificationMessage);
+    const msgParam = urlParams.get('msg') || verificationMessage;
+
+    if (emailParam) {
+      setEmail(decodeURIComponent(emailParam));
+    }
+    setPassword(''); // Password must remain completely empty
+
+    if (isRegistered || msgParam) {
+      setVerificationBanner(
+        msgParam
+          ? decodeURIComponent(msgParam)
+          : 'Your account has been created. Please check your email and verify your address before logging in.'
+      );
+    }
+  }, [initialEmail, verificationMessage]);
 
   const handleGoogleLogin = async () => {
     try {
       setGoogleLoading(true);
       setError(null);
-      await loginWithGoogle();
-      onNavigate(ROUTES.DASHBOARD);
+      const { data, error: oauthError } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: typeof window !== 'undefined' ? `${window.location.origin}/` : undefined,
+        },
+      });
+      if (oauthError) {
+        throw oauthError;
+      }
     } catch (err: any) {
-      setError(err.message || 'Unable to sign in with Google. Please try again.');
+      setError(err?.message || 'Unable to sign in with Google. Please try again.');
     } finally {
       setGoogleLoading(false);
     }
@@ -96,6 +128,27 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onNavigate, returnTo }) =>
             Access your creator QA workspace, upload reviews, and policy reports.
           </p>
         </div>
+
+        {verificationBanner && (
+          <div className="bg-emerald-50 border border-emerald-300/80 rounded-xl p-4 shadow-sm animate-in fade-in slide-in-from-top-2 duration-300">
+            <div className="flex items-start gap-3">
+              <div className="p-2 bg-emerald-600 text-white rounded-lg shrink-0 mt-0.5">
+                <MailCheck className="w-4 h-4" />
+              </div>
+              <div className="space-y-1">
+                <h4 className="text-xs font-bold text-emerald-950 uppercase tracking-wide">
+                  Email Verification Required
+                </h4>
+                <p className="text-xs text-emerald-900 leading-relaxed font-medium">
+                  {verificationBanner}
+                </p>
+                <p className="text-[11px] text-emerald-800 pt-0.5">
+                  We prefilled your email below. Enter your password once verified.
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
 
         {error && (
           <Alert variant="error" title="Authentication Error">

@@ -373,9 +373,16 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     return { unverified: false, isCompleted: true };
   };
 
-  const loginWithGoogle = async () => {
-    // Instant demo login with sample Google creator account
-    await login({ email: 'creator.demo@prescan.local', password: 'demopassword' });
+  const loginWithGoogle = async (): Promise<void> => {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: typeof window !== 'undefined' ? window.location.origin : undefined,
+      },
+    });
+    if (error) {
+      throw error;
+    }
   };
 
   const signup = async (payload: { fullName?: string; email: string; password?: string; termsAccepted?: boolean }) => {

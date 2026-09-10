@@ -107,8 +107,8 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
     <div className="space-y-8">
       {/* Top Page Header */}
       <PageHeader
-        title="Workspace Overview"
-        description={`Manage pre-upload safety and review queues for ${wsName}.`}
+        title="Dashboard"
+        description="Manage pre-upload safety checks, recent scans, and review queues."
         badge={
           <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-50 text-emerald-800 border border-emerald-200">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
@@ -127,40 +127,28 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
         }
       />
 
-      {/* Intentional Welcome Banner */}
-      <div className="rounded-2xl border border-neutral-200 bg-gradient-to-b from-white to-neutral-50/80 p-6 sm:p-8 shadow-xs">
-        <div className="max-w-2xl">
-          <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full text-xs font-semibold bg-neutral-100 text-neutral-800 mb-4 border border-neutral-200">
-            <Sparkles className="w-3.5 h-3.5 text-neutral-700" />
-            <span>Pre-Upload Quality Engine</span>
-          </div>
-
-          <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-neutral-900 mb-2">
-            Welcome back, {firstName}.
-          </h2>
-
-          <p className="text-sm text-neutral-600 leading-relaxed mb-6">
-            Run your PreScan to validate container streams, audio dialogue, and YouTube metadata before you publish. All scans are securely partitioned in <strong className="text-neutral-900">{wsName}</strong>.
-          </p>
-
-          <div className="flex flex-wrap items-center gap-3">
-            <Button
-              variant="primary"
-              size="md"
-              leftIcon={<Plus className="w-4 h-4" />}
-              onClick={() => onNavigate(ROUTES.NEW_SCAN)}
-            >
-              + New Scan
-            </Button>
-            <Button
-              variant="outline"
-              size="md"
-              rightIcon={<ArrowRight className="w-4 h-4" />}
-              onClick={() => onNavigate(ROUTES.SCANS)}
-            >
-              View Scan Repository
-            </Button>
-          </div>
+      {/* Quick Action & Ingest Summary */}
+      <div className="flex flex-wrap items-center justify-between gap-4 p-4 rounded-xl border border-neutral-200 bg-white shadow-2xs">
+        <div>
+          <h3 className="text-sm font-bold text-neutral-900">Start a New QA Review</h3>
+          <p className="text-xs text-neutral-500">Upload a video or audio file or analyze a YouTube link before publishing.</p>
+        </div>
+        <div className="flex items-center gap-2.5">
+          <Button
+            variant="primary"
+            size="sm"
+            leftIcon={<Plus className="w-4 h-4" />}
+            onClick={() => onNavigate(ROUTES.NEW_SCAN)}
+          >
+            + New Scan
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => onNavigate(ROUTES.SCANS)}
+          >
+            All Scans
+          </Button>
         </div>
       </div>
 

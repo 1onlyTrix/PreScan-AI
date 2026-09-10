@@ -29,10 +29,17 @@ export const SignupPage: React.FC<SignupPageProps> = ({ onNavigate }) => {
     try {
       setGoogleLoading(true);
       setError(null);
-      await loginWithGoogle();
-      onNavigate(ROUTES.ONBOARDING);
+      const { data, error: oauthError } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: typeof window !== 'undefined' ? `${window.location.origin}/` : undefined,
+        },
+      });
+      if (oauthError) {
+        throw oauthError;
+      }
     } catch (err: any) {
-      setError(err.message || 'Unable to sign up with Google. Please try again.');
+      setError(err?.message || 'Unable to sign up with Google. Please try again.');
     } finally {
       setGoogleLoading(false);
     }
@@ -91,15 +98,12 @@ export const SignupPage: React.FC<SignupPageProps> = ({ onNavigate }) => {
         return;
       }
 
-      // If data.session is null, don't redirect to the dashboard.
-      // Show: "Check your email and confirm your account before logging in."
-      if (!data?.session) {
-        setInfoMessage('Check your email and confirm your account before logging in.');
-        return;
-      }
-
-      // Only redirect when a real session exists
-      onNavigate(ROUTES.HOME);
+      // When user signs up:
+      // Redirect immediately to the Login page (/login) with email prefilled, password blank,
+      // and banner notice: "Your account has been created. Please check your email and verify your address before logging in."
+      const registeredEmail = encodeURIComponent(email.trim());
+      const message = encodeURIComponent('Your account has been created. Please check your email and verify your address before logging in.');
+      onNavigate(`${ROUTES.LOGIN}?email=${registeredEmail}&registered=true&msg=${message}`);
     } catch (err: any) {
       setError(err?.message || 'Failed to create your account.');
     } finally {

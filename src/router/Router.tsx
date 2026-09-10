@@ -144,21 +144,15 @@ export const Router: React.FC = () => {
     return <PublicTermsPage onNavigate={navigate} />;
   }
 
-  // 2. Authentication Flow Pages with Smart Redirection
+  // 2. Authentication Flow Pages
   if (routePath === ROUTES.LOGIN) {
-    if (authStatus === 'AUTHENTICATED_READY') {
-      return <DashboardPage onNavigate={navigate} />;
-    }
-    return <LoginPage onNavigate={navigate} />;
+    const urlParams = new URLSearchParams(currentRoute.includes('?') ? currentRoute.split('?')[1] : '');
+    const prefilledEmail = urlParams.get('email') || undefined;
+    const msg = urlParams.get('msg') || (urlParams.get('registered') === 'true' ? 'Your account has been created. Please check your email and verify your address before logging in.' : undefined);
+    return <LoginPage onNavigate={navigate} initialEmail={prefilledEmail} verificationMessage={msg} />;
   }
 
   if (routePath === ROUTES.SIGNUP) {
-    if (authStatus === 'AUTHENTICATED_READY') {
-      return <DashboardPage onNavigate={navigate} />;
-    }
-    if (authStatus === 'AUTHENTICATED_ONBOARDING' || authStatus === 'AUTHENTICATED_UNVERIFIED') {
-      return <OnboardingPage onNavigate={navigate} />;
-    }
     return <SignupPage onNavigate={navigate} />;
   }
 
