@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, useEffect, ReactNode, useCa
 import { User, Organization, Membership } from '../types';
 import { AuthStatus, OnboardingState, AuthContextType, WorkspaceWithRole } from '../types/auth';
 import { getStoredWorkspaceId, setStoredWorkspaceId, setStoredToken } from '../lib/api';
+import { supabase } from '../supabaseClient';
 
 const DEMO_SESSION_KEY = 'prescan_demo_session';
 const DEMO_ONBOARDING_KEY = 'prescan_demo_onboarding_db';
@@ -76,88 +77,158 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     try {
       setIsLoading(true);
 
-      const rawSession = localStorage.getItem(DEMO_SESSION_KEY);
-      if (!rawSession) {
-        setUser(null);
-        setOrganization(null);
-        setMembership(null);
-        setWorkspaces([]);
-        setOnboarding(null);
-        setAuthStatus('UNAUTHENTICATED');
+      // Check Supabase session first
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      if (!session || !session.user) {
+        // Check fallback demo session if any
+        const rawSession = localStorage.getItem(DEMO_SESSION_KEY);
+        if (!rawSession) {
+          setUser(null);
+          setOrganization(null);
+          setMembership(null);
+          setWorkspaces([]);
+          setOnboarding(null);
+          setAuthStatus('UNAUTHENTICATED');
+          setIsLoading(false);
+          return;
+        }
+
+        const parsedSession: User & { isSignupFlow?: boolean } = JSON.parse(rawSession);
+        const email = parsedSession.email.toLowerCase();
+        const onboardingDb = getLocalOnboardingDB();
+        const userOnboarding = onboardingDb[email];
+
+        setUser(parsedSession);
+        setStoredToken(`demo_${email}`);
+
+        if (parsedSession.isSignupFlow === true && (!userOnboarding || !userOnboarding.completed)) {
+          setOrganization(null);
+          setWorkspaces([]);
+          setMembership(null);
+          setOnboarding({
+            userId: parsedSession.id,
+            step: userOnboarding?.step || 1,
+            status: 'IN_PROGRESS',
+            creatorType: userOnboarding?.creatorType,
+            contentTypes: userOnboarding?.contentTypes,
+            publishFrequency: userOnboarding?.publishFrequency,
+            workspaceName: userOnboarding?.workspaceName,
+            updatedAt: new Date().toISOString(),
+          });
+          setAuthStatus('AUTHENTICATED_ONBOARDING');
+        } else {
+          const wsDb = getLocalWorkspacesDB();
+          let userWorkspaces = wsDb[email] || [];
+          
+          if (userWorkspaces.length === 0) {
+            const defaultWs: Organization = {
+              id: `ws_${email.replace(/[^a-zA-Z0-9]/g, '_')}`,
+              name: userOnboarding?.workspaceName || `${parsedSession.fullName || parsedSession.displayName || 'Creator'}'s Workspace`,
+              slug: 'workspace',
+              createdById: parsedSession.id,
+              ownerId: parsedSession.id,
+              memberCount: 1,
+              createdAt: new Date().toISOString(),
+              updatedAt: new Date().toISOString(),
+            };
+            userWorkspaces = [defaultWs];
+            wsDb[email] = userWorkspaces;
+            saveLocalWorkspacesDB(wsDb);
+          }
+
+          const activeWorkspace = userWorkspaces[0];
+          setOrganization(activeWorkspace);
+          setStoredWorkspaceId(activeWorkspace.id);
+          setWorkspaces(userWorkspaces.map(w => ({ ...w, role: 'OWNER' })));
+          setMembership({
+            id: `mem_${parsedSession.id}`,
+            userId: parsedSession.id,
+            organizationId: activeWorkspace.id,
+            role: 'OWNER',
+            joinedAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+          });
+          setOnboarding({
+            userId: parsedSession.id,
+            step: 4,
+            status: 'COMPLETED',
+            workspaceName: activeWorkspace.name,
+            creatorType: userOnboarding?.creatorType,
+            contentTypes: userOnboarding?.contentTypes,
+            publishFrequency: userOnboarding?.publishFrequency,
+            completedAt: userOnboarding?.completedAt,
+            updatedAt: new Date().toISOString(),
+          });
+          setAuthStatus('AUTHENTICATED_READY');
+        }
         setIsLoading(false);
         return;
       }
 
-      const parsedSession: User & { isSignupFlow?: boolean } = JSON.parse(rawSession);
-      const email = parsedSession.email.toLowerCase();
+      // Real Supabase User
+      const sbUser = session.user;
+      const email = (sbUser.email || '').toLowerCase();
+      const displayName = sbUser.user_metadata?.full_name || sbUser.user_metadata?.name || email.split('@')[0] || 'Creator';
+
+      const authenticatedUser: User = {
+        id: sbUser.id,
+        email: email,
+        fullName: displayName,
+        displayName: displayName,
+        emailVerified: Boolean(sbUser.email_confirmed_at),
+        createdAt: sbUser.created_at || new Date().toISOString(),
+        updatedAt: sbUser.updated_at || new Date().toISOString(),
+      };
+
+      setUser(authenticatedUser);
+      setStoredToken(session.access_token);
+
       const onboardingDb = getLocalOnboardingDB();
       const userOnboarding = onboardingDb[email];
+      const wsDb = getLocalWorkspacesDB();
+      let userWorkspaces = wsDb[email] || [];
 
-      setUser(parsedSession);
-      setStoredToken(`demo_${email}`);
-
-      // If user came from signup and hasn't finished onboarding yet:
-      if (parsedSession.isSignupFlow === true && (!userOnboarding || !userOnboarding.completed)) {
-        setOrganization(null);
-        setWorkspaces([]);
-        setMembership(null);
-        setOnboarding({
-          userId: parsedSession.id,
-          step: userOnboarding?.step || 1,
-          status: 'IN_PROGRESS',
-          creatorType: userOnboarding?.creatorType,
-          contentTypes: userOnboarding?.contentTypes,
-          publishFrequency: userOnboarding?.publishFrequency,
-          workspaceName: userOnboarding?.workspaceName,
+      if (userWorkspaces.length === 0) {
+        const defaultWs: Organization = {
+          id: `ws_${email.replace(/[^a-zA-Z0-9]/g, '_')}`,
+          name: userOnboarding?.workspaceName || `${displayName}'s Workspace`,
+          slug: 'workspace',
+          createdById: authenticatedUser.id,
+          ownerId: authenticatedUser.id,
+          memberCount: 1,
+          createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
-        });
-        setAuthStatus('AUTHENTICATED_ONBOARDING');
-      } else {
-        // User logged in OR completed signup onboarding -> always ready for Dashboard
-        const wsDb = getLocalWorkspacesDB();
-        let userWorkspaces = wsDb[email] || [];
-        
-        if (userWorkspaces.length === 0) {
-          const defaultWs: Organization = {
-            id: `ws_${email.replace(/[^a-zA-Z0-9]/g, '_')}`,
-            name: userOnboarding?.workspaceName || `${parsedSession.fullName || parsedSession.displayName || 'Creator'}'s Workspace`,
-            slug: 'workspace',
-            createdById: parsedSession.id,
-            ownerId: parsedSession.id,
-            memberCount: 1,
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-          };
-          userWorkspaces = [defaultWs];
-          wsDb[email] = userWorkspaces;
-          saveLocalWorkspacesDB(wsDb);
-        }
-
-        const activeWorkspace = userWorkspaces[0];
-        setOrganization(activeWorkspace);
-        setStoredWorkspaceId(activeWorkspace.id);
-        setWorkspaces(userWorkspaces.map(w => ({ ...w, role: 'OWNER' })));
-        setMembership({
-          id: `mem_${parsedSession.id}`,
-          userId: parsedSession.id,
-          organizationId: activeWorkspace.id,
-          role: 'OWNER',
-          joinedAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-        });
-        setOnboarding({
-          userId: parsedSession.id,
-          step: 4,
-          status: 'COMPLETED',
-          workspaceName: activeWorkspace.name,
-          creatorType: userOnboarding?.creatorType,
-          contentTypes: userOnboarding?.contentTypes,
-          publishFrequency: userOnboarding?.publishFrequency,
-          completedAt: userOnboarding?.completedAt,
-          updatedAt: new Date().toISOString(),
-        });
-        setAuthStatus('AUTHENTICATED_READY');
+        };
+        userWorkspaces = [defaultWs];
+        wsDb[email] = userWorkspaces;
+        saveLocalWorkspacesDB(wsDb);
       }
+
+      const activeWorkspace = userWorkspaces[0];
+      setOrganization(activeWorkspace);
+      setStoredWorkspaceId(activeWorkspace.id);
+      setWorkspaces(userWorkspaces.map(w => ({ ...w, role: 'OWNER' })));
+      setMembership({
+        id: `mem_${authenticatedUser.id}`,
+        userId: authenticatedUser.id,
+        organizationId: activeWorkspace.id,
+        role: 'OWNER',
+        joinedAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      });
+      setOnboarding({
+        userId: authenticatedUser.id,
+        step: 4,
+        status: 'COMPLETED',
+        workspaceName: activeWorkspace.name,
+        creatorType: userOnboarding?.creatorType,
+        contentTypes: userOnboarding?.contentTypes,
+        publishFrequency: userOnboarding?.publishFrequency,
+        completedAt: userOnboarding?.completedAt || new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      });
+      setAuthStatus('AUTHENTICATED_READY');
     } catch {
       setUser(null);
       setOrganization(null);
@@ -172,6 +243,24 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   useEffect(() => {
     refreshSession();
+
+    const { data: authListener } = supabase.auth.onAuthStateChange((_event: string, session: any) => {
+      if (session?.user) {
+        refreshSession();
+      } else if (!localStorage.getItem(DEMO_SESSION_KEY)) {
+        setUser(null);
+        setOrganization(null);
+        setMembership(null);
+        setWorkspaces([]);
+        setOnboarding(null);
+        setAuthStatus('UNAUTHENTICATED');
+        setIsLoading(false);
+      }
+    });
+
+    return () => {
+      authListener?.subscription?.unsubscribe();
+    };
   }, [refreshSession]);
 
   const switchWorkspace = async (workspaceId: string) => {
@@ -339,9 +428,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const logout = async () => {
     try {
+      await supabase.auth.signOut();
       localStorage.removeItem(DEMO_SESSION_KEY);
       setStoredToken(null);
       setStoredWorkspaceId(null);
+    } catch {
+      // Ignore signOut errors on client cleanup
     } finally {
       setUser(null);
       setOrganization(null);

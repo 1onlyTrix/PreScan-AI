@@ -6,6 +6,7 @@ import { Card, CardContent, CardFooter } from '../components/ui/Card';
 import { Alert } from '../components/ui/Alert';
 import { useAuth } from '../context/AuthContext';
 import { ROUTES } from '../router/routes';
+import { supabase } from '../supabaseClient';
 
 interface LoginPageProps {
   onNavigate: (route: string) => void;
@@ -45,15 +46,26 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onNavigate, returnTo }) =>
       setLoading(true);
       setError(null);
 
-      await login({
+      const { data, error: signInError } = await supabase.auth.signInWithPassword({
         email: email.trim(),
         password,
       });
 
-      // Login ALWAYS goes directly to Dashboard
-      onNavigate(returnTo || ROUTES.DASHBOARD);
+      if (signInError) {
+        setError(signInError.message || 'Unable to sign in. Please check your credentials and try again.');
+        return;
+      }
+
+      // Only redirect when a real session exists after login
+      if (!data?.session) {
+        setError('Check your email and confirm your account before logging in.');
+        return;
+      }
+
+      // Redirect the user to the Home page ("/")
+      onNavigate(ROUTES.HOME);
     } catch (err: any) {
-      setError(err.message || 'Unable to sign in. Please check your credentials and try again.');
+      setError(err?.message || 'Unable to sign in. Please check your credentials and try again.');
     } finally {
       setLoading(false);
     }

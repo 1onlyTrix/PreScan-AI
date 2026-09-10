@@ -6,6 +6,7 @@ import { Card, CardContent, CardFooter } from '../components/ui/Card';
 import { Alert } from '../components/ui/Alert';
 import { useAuth } from '../context/AuthContext';
 import { ROUTES } from '../router/routes';
+import { supabase } from '../supabaseClient';
 
 interface SignupPageProps {
   onNavigate: (route: string) => void;
@@ -22,6 +23,7 @@ export const SignupPage: React.FC<SignupPageProps> = ({ onNavigate }) => {
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [infoMessage, setInfoMessage] = useState<string | null>(null);
 
   const handleGoogleSignup = async () => {
     try {
@@ -72,20 +74,34 @@ export const SignupPage: React.FC<SignupPageProps> = ({ onNavigate }) => {
     try {
       setLoading(true);
       setError(null);
+      setInfoMessage(null);
 
-      const computedName = fullName.trim() || email.trim().split('@')[0] || 'Demo Creator';
-
-      await signup({
-        fullName: computedName,
+      const { data, error: signUpError } = await supabase.auth.signUp({
         email: email.trim(),
         password,
-        termsAccepted: true,
+        options: {
+          data: {
+            full_name: fullName.trim() || undefined,
+          },
+        },
       });
 
-      // Newly registered users ALWAYS go to existing Onboarding Questions page
-      onNavigate(ROUTES.ONBOARDING);
+      if (signUpError) {
+        setError(signUpError.message || 'Failed to create your account.');
+        return;
+      }
+
+      // If data.session is null, don't redirect to the dashboard.
+      // Show: "Check your email and confirm your account before logging in."
+      if (!data?.session) {
+        setInfoMessage('Check your email and confirm your account before logging in.');
+        return;
+      }
+
+      // Only redirect when a real session exists
+      onNavigate(ROUTES.HOME);
     } catch (err: any) {
-      setError(err.message || 'Failed to create your account.');
+      setError(err?.message || 'Failed to create your account.');
     } finally {
       setLoading(false);
     }
@@ -116,6 +132,12 @@ export const SignupPage: React.FC<SignupPageProps> = ({ onNavigate }) => {
             Pre-screen video dialogue, copyright signals, and metadata before you publish.
           </p>
         </div>
+
+        {infoMessage && (
+          <Alert variant="info" title="Verification Notice">
+            {infoMessage}
+          </Alert>
+        )}
 
         {error && (
           <Alert variant="error" title="Registration Error">
@@ -291,6 +313,12 @@ export const SignupPage: React.FC<SignupPageProps> = ({ onNavigate }) => {
                   </span>
                 </label>
               </div>
+
+              {infoMessage && (
+                <div className="p-3 bg-neutral-100 border border-neutral-300 rounded-lg text-xs text-neutral-800 font-medium">
+                  {infoMessage}
+                </div>
+              )}
 
               {error && (
                 <p className="text-xs text-rose-600 font-medium pt-1">

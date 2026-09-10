@@ -36,6 +36,7 @@ import { OnboardingPage } from '../pages/OnboardingPage';
 import { AccountSuspendedPage } from '../pages/AccountSuspendedPage';
 import { AcceptInvitationPage } from '../pages/AcceptInvitationPage';
 import { Sparkles, Loader2 } from 'lucide-react';
+import { supabase } from '../supabaseClient';
 
 export const Router: React.FC = () => {
   const { authStatus, isLoading } = useAuth();
@@ -79,6 +80,18 @@ export const Router: React.FC = () => {
 
   // Extract base route path without query params or hash fragment for matching
   const routePath = currentRoute.split('?')[0].split('#')[0];
+
+  // Protect private pages with supabase.auth.getSession() — if no session, redirect to /login
+  useEffect(() => {
+    const isPrivate = routePath.startsWith('/app') || routePath === ROUTES.ONBOARDING;
+    if (isPrivate) {
+      supabase.auth.getSession().then(({ data: { session } }: any) => {
+        if (!session) {
+          navigate(ROUTES.LOGIN);
+        }
+      });
+    }
+  }, [routePath]);
 
   // Global Loading Splash during initial auth verification
   if (isLoading) {
