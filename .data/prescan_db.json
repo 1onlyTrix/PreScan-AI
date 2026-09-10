@@ -1,0 +1,1934 @@
+{
+  "users": [
+    {
+      "id": "usr_63e223a9fc6adc1ff8b5a87a",
+      "email": "himanshu9968014@gmail.com",
+      "fullName": "Youtuber Xrp",
+      "displayName": "Youtuber Xrp",
+      "emailVerified": true,
+      "passwordHash": "b79f046ce6eca32a6de6c0e7ffddc2f637c58e866041e3af152fe4483f374a4c2c10ffa04381084a47186ba3af33c3c2e88205c79c315ff2c935c2e613b7227f",
+      "passwordSalt": "4486d5c2ebaf460a306518a583533f84",
+      "status": "ACTIVE",
+      "termsAcceptedAt": "2026-08-31T07:38:01.380Z",
+      "privacyAcceptedAt": "2026-08-31T07:38:01.380Z",
+      "createdAt": "2026-08-31T07:38:01.380Z",
+      "updatedAt": "2026-08-31T07:40:11.118Z",
+      "lastLoginAt": "2026-08-31T07:39:05.790Z",
+      "defaultOrganizationId": "org_1788347805718_h4ihs"
+    },
+    {
+      "id": "usr_4c6584b94a7cba32f8ac5c5e",
+      "email": "alex.test@example.com",
+      "fullName": "Alex Test",
+      "displayName": "Alex Test",
+      "emailVerified": true,
+      "passwordHash": "7ca17bffac1c0f46045df32df2ff0716fd2c6e6d1a697c21507945c75960faca73d851addc894233f637fc93a7a9cae3d4d913230629a2d052efb64a0163ad29",
+      "passwordSalt": "7cae327c1492d5b2121fe9a5c1d0b6b4",
+      "status": "ACTIVE",
+      "termsAcceptedAt": "2026-08-31T07:51:17.408Z",
+      "privacyAcceptedAt": "2026-08-31T07:51:17.408Z",
+      "createdAt": "2026-08-31T07:51:17.408Z",
+      "updatedAt": "2026-08-31T07:51:39.986Z",
+      "lastLoginAt": "2026-08-31T07:51:39.986Z",
+      "defaultOrganizationId": "org_c34e387a5ab77a7bdf458e53"
+    },
+    {
+      "id": "usr_c655046b6a62bed425579fd8",
+      "email": "unverified@example.com",
+      "fullName": "Unverified User",
+      "displayName": "Unverified User",
+      "emailVerified": false,
+      "passwordHash": "1b3fc11124f8348c975887e13c44f1b5313f0b90fd4a17edd4dcb42650d3d91bc6a6ca4c3797e3b644ed574e8c541ea55965528f9904d996dc81843213bd7834",
+      "passwordSalt": "13fd9cca83096e47f34845b00bdffe78",
+      "status": "ACTIVE",
+      "termsAcceptedAt": "2026-08-31T07:51:43.361Z",
+      "privacyAcceptedAt": "2026-08-31T07:51:43.361Z",
+      "createdAt": "2026-08-31T07:51:43.361Z",
+      "updatedAt": "2026-08-31T07:51:43.361Z",
+      "lastLoginAt": "2026-08-31T07:51:43.361Z",
+      "defaultOrganizationId": "org_1788347805718_o1898"
+    },
+    {
+      "id": "usr_c4f4f74cf7463bc178b44567",
+      "email": "alex@test.com",
+      "fullName": "Alex Morgan",
+      "displayName": "Alex Morgan",
+      "emailVerified": false,
+      "passwordHash": "f161ec30554dcb6efe2c3018540adc64f55f44a1076267c9c9b8f0913f26550f26563296624418e506bc3d8720e98587aa2611ce5fd29604dcf20c4016c2e915",
+      "passwordSalt": "6e3f31ef59d801255a573f94bf25a776",
+      "status": "ACTIVE",
+      "termsAcceptedAt": "2026-09-03T07:55:28.420Z",
+      "privacyAcceptedAt": "2026-09-03T07:55:28.420Z",
+      "createdAt": "2026-09-03T07:55:28.420Z",
+      "updatedAt": "2026-09-03T07:55:28.420Z",
+      "lastLoginAt": "2026-09-03T07:55:28.420Z",
+      "defaultOrganizationId": "org_1788422294751_i7vqn"
+    },
+    {
+      "id": "usr_4bfce9baddb44fc37289b3b2",
+      "email": "himanshu_check@test.com",
+      "fullName": "Himanshu Test",
+      "displayName": "Himanshu Test",
+      "emailVerified": false,
+      "passwordHash": "9ca7f80fe9313cf38888db64f72e75fbe8f583a40a10fe2122c5c31da05583c79f0777c1b21b22fa8eb27620406f9b0dfbdfae6c54b3b5f716454295fcf6cf73",
+      "passwordSalt": "87974e37a5c25ff9247730a8dbffca31",
+      "status": "ACTIVE",
+      "termsAcceptedAt": "2026-09-03T07:58:18.241Z",
+      "privacyAcceptedAt": "2026-09-03T07:58:18.241Z",
+      "createdAt": "2026-09-03T07:58:18.241Z",
+      "updatedAt": "2026-09-03T07:58:18.241Z",
+      "lastLoginAt": "2026-09-03T07:58:18.241Z",
+      "defaultOrganizationId": "org_1788422304649_bttqj"
+    },
+    {
+      "id": "usr_65e564e434539510fd5e8b2a",
+      "email": "himanshu996801452@gmail.com",
+      "fullName": "Youtuber Xrp",
+      "displayName": "Youtuber Xrp",
+      "emailVerified": true,
+      "passwordHash": "77c9eaa69c3665aff2c3b09edd968347873db8ffbb5ce149645087ee4e40683448327355a96bcaf75e01f5d456ceaf46cd7319953d16a8f9cfe65c3928153b9a",
+      "passwordSalt": "f249c8c4acaabbf6afa2cf74d92d5811",
+      "status": "ACTIVE",
+      "termsAcceptedAt": "2026-09-03T08:06:20.173Z",
+      "privacyAcceptedAt": "2026-09-03T08:06:20.173Z",
+      "createdAt": "2026-09-03T08:06:20.173Z",
+      "updatedAt": "2026-09-03T08:06:47.406Z",
+      "lastLoginAt": "2026-09-03T08:06:20.365Z",
+      "defaultOrganizationId": "org_67eb416ebe822548a617bfe1"
+    },
+    {
+      "id": "usr_2c99fc6bc89233d18bf90056",
+      "email": "verified_test_1788423539758@channel.com",
+      "fullName": "Test Creator",
+      "displayName": "Test Creator",
+      "emailVerified": true,
+      "passwordHash": "450ea053813961c6a1f49d28a30ded507b952eec96c8ee8a4063fd076cce4d785e0e15bd7f23a44c463311e2ce4a360a116856df5c37930f8e1201d8386b4c16",
+      "passwordSalt": "5592f483d381ea07d09310e66368e74b",
+      "status": "ACTIVE",
+      "termsAcceptedAt": "2026-09-03T08:18:59.860Z",
+      "privacyAcceptedAt": "2026-09-03T08:18:59.860Z",
+      "createdAt": "2026-09-03T08:18:59.860Z",
+      "updatedAt": "2026-09-03T08:19:00.074Z",
+      "lastLoginAt": "2026-09-03T08:19:00.074Z",
+      "defaultOrganizationId": "org_1788423605383_m8796"
+    },
+    {
+      "id": "usr_demo_creator",
+      "email": "creator@prescan.dev",
+      "displayName": "PreScan Demo Creator",
+      "fullName": "PreScan Demo Creator",
+      "emailVerified": true,
+      "passwordHash": "4dd01ebc842f6b601cea79a1cd5e7a950c0079c51325007c4936e0d1bb99f3721a80bd2a9a986e9ef6fceb7fd8d71b27c51c0cd10897d3236e9dc86ba7306906",
+      "passwordSalt": "ea45e6847c8e129a8e4e5dfdec9bee53",
+      "status": "ACTIVE",
+      "defaultOrganizationId": "org_demo_workspace",
+      "termsAcceptedAt": "2026-09-03T08:20:05.382Z",
+      "privacyAcceptedAt": "2026-09-03T08:20:05.382Z",
+      "createdAt": "2026-09-03T08:20:05.382Z",
+      "updatedAt": "2026-09-03T08:21:22.921Z",
+      "lastLoginAt": "2026-09-03T08:21:22.921Z"
+    },
+    {
+      "id": "usr_test_example_com",
+      "email": "test@example.com",
+      "fullName": "test",
+      "displayName": "test",
+      "emailVerified": true,
+      "passwordHash": "demohash",
+      "passwordSalt": "demosalt",
+      "status": "ACTIVE",
+      "termsAcceptedAt": "2026-09-06T16:35:27.423Z",
+      "privacyAcceptedAt": "2026-09-06T16:35:27.423Z",
+      "createdAt": "2026-09-06T16:35:27.423Z",
+      "updatedAt": "2026-09-06T16:35:27.424Z",
+      "defaultOrganizationId": "ws_usr_test_example_com"
+    },
+    {
+      "id": "usr_creator_demo_prescan_local",
+      "email": "creator.demo@prescan.local",
+      "fullName": "creator.demo",
+      "displayName": "creator.demo",
+      "emailVerified": true,
+      "passwordHash": "demohash",
+      "passwordSalt": "demosalt",
+      "status": "ACTIVE",
+      "termsAcceptedAt": "2026-09-06T16:36:17.872Z",
+      "privacyAcceptedAt": "2026-09-06T16:36:17.872Z",
+      "createdAt": "2026-09-06T16:36:17.872Z",
+      "updatedAt": "2026-09-06T16:36:17.872Z",
+      "defaultOrganizationId": "ws_1788711772074"
+    },
+    {
+      "id": "usr_073660e764efaa2a4e0af63d",
+      "email": "creator@test.com",
+      "fullName": "Test Creator",
+      "displayName": "Test Creator",
+      "emailVerified": true,
+      "passwordHash": "b874587139dac9e1dc749d21d2b53e20e7f412a561d0b252ede76fcbaa0e012424aa32df27f756549273c90ac8b9c831747cb1df7c86edebdfcdfbea819d0d2d",
+      "passwordSalt": "9b65a976259e3c3fc568e59553054e4b",
+      "status": "ACTIVE",
+      "termsAcceptedAt": "2026-09-06T16:56:11.536Z",
+      "privacyAcceptedAt": "2026-09-06T16:56:11.536Z",
+      "createdAt": "2026-09-06T16:56:11.536Z",
+      "updatedAt": "2026-09-06T16:56:28.806Z",
+      "lastLoginAt": "2026-09-06T16:56:11.536Z",
+      "defaultOrganizationId": "org_1a565fea2e524c7e247407b4"
+    }
+  ],
+  "sessions": [
+    {
+      "token": "93aa3e9f905829f79c6d3452ac6e28719068270ec9e08095385ec33ec8f212e7",
+      "userId": "usr_63e223a9fc6adc1ff8b5a87a",
+      "expiresAt": "2026-09-30T07:38:01.439Z",
+      "createdAt": "2026-08-31T07:38:01.380Z",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+      "ipAddress": "127.0.0.1"
+    },
+    {
+      "token": "3226901b0723fd2b79f45c123cc6e90921a4281212d2d0a0d26402e3da4e9120",
+      "userId": "usr_63e223a9fc6adc1ff8b5a87a",
+      "expiresAt": "2026-09-30T07:39:05.790Z",
+      "createdAt": "2026-08-31T07:39:05.790Z",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+      "ipAddress": "127.0.0.1"
+    },
+    {
+      "token": "56cbb569d97d2827ef0e420f935a2ea940e71d39cbd18b7ac3f0d06d71030c9e",
+      "userId": "usr_4c6584b94a7cba32f8ac5c5e",
+      "expiresAt": "2026-09-30T07:51:17.482Z",
+      "createdAt": "2026-08-31T07:51:17.408Z",
+      "userAgent": "curl/7.88.1",
+      "ipAddress": "127.0.0.1"
+    },
+    {
+      "token": "e787456e665727fd2514d1d1c8f56dcbe6deb9ac00b17924a7d992770c010bc1",
+      "userId": "usr_4c6584b94a7cba32f8ac5c5e",
+      "expiresAt": "2026-09-30T07:51:27.987Z",
+      "createdAt": "2026-08-31T07:51:27.987Z",
+      "userAgent": "curl/7.88.1",
+      "ipAddress": "127.0.0.1"
+    },
+    {
+      "token": "b823f55325273e15347eee968960df6b774f383d9eeffc52377f096b19262f49",
+      "userId": "usr_4c6584b94a7cba32f8ac5c5e",
+      "expiresAt": "2026-09-30T07:51:39.986Z",
+      "createdAt": "2026-08-31T07:51:39.986Z",
+      "userAgent": "curl/7.88.1",
+      "ipAddress": "127.0.0.1"
+    },
+    {
+      "token": "385dd6744b72e686c146fe2fbdd3ee7e36bdc224ebf96a3dcd1aef4b8df71ee1",
+      "userId": "usr_c655046b6a62bed425579fd8",
+      "expiresAt": "2026-09-30T07:51:43.408Z",
+      "createdAt": "2026-08-31T07:51:43.361Z",
+      "userAgent": "curl/7.88.1",
+      "ipAddress": "127.0.0.1"
+    },
+    {
+      "token": "4f3a8e54b55a76e2d6aa6ba8f7f128226233804e86af3224eae5c8ed7d65b2c7",
+      "userId": "usr_c655046b6a62bed425579fd8",
+      "expiresAt": "2026-09-30T07:51:43.464Z",
+      "createdAt": "2026-08-31T07:51:43.464Z",
+      "userAgent": "curl/7.88.1",
+      "ipAddress": "127.0.0.1"
+    },
+    {
+      "token": "93968b5bd2ba1322f57ce95729f2172e8e7a19b4b1296de4a036a0db4e0c98ad",
+      "userId": "usr_c4f4f74cf7463bc178b44567",
+      "expiresAt": "2026-10-03T07:55:28.503Z",
+      "createdAt": "2026-09-03T07:55:28.420Z",
+      "userAgent": "curl/7.88.1",
+      "ipAddress": "127.0.0.1"
+    },
+    {
+      "token": "eae69ef2452c7b4ea8344ab58fe6b6d716772c215f56f178301f41ba64f7a295",
+      "userId": "usr_4bfce9baddb44fc37289b3b2",
+      "expiresAt": "2026-10-03T07:58:18.319Z",
+      "createdAt": "2026-09-03T07:58:18.241Z",
+      "userAgent": "curl/7.88.1",
+      "ipAddress": "127.0.0.1"
+    },
+    {
+      "token": "21d5add71b7b7fe8a5da6e7a4e12672cd8689ebb4c1a1a9743a5db27fc54e733",
+      "userId": "usr_65e564e434539510fd5e8b2a",
+      "expiresAt": "2026-10-03T08:06:20.262Z",
+      "createdAt": "2026-09-03T08:06:20.173Z",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36",
+      "ipAddress": "127.0.0.1"
+    },
+    {
+      "token": "bf3aa3059bfb7d9072fbce1d66e4b97c9ed505a93f222fd84287b4c3960d2073",
+      "userId": "usr_65e564e434539510fd5e8b2a",
+      "expiresAt": "2026-10-03T08:06:20.365Z",
+      "createdAt": "2026-09-03T08:06:20.365Z",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36",
+      "ipAddress": "127.0.0.1"
+    },
+    {
+      "token": "b218c85d2533e81b3c5f8ffde9a2ccc63c11f83a3448d7b2cdaafa2f03f68548",
+      "userId": "usr_2c99fc6bc89233d18bf90056",
+      "expiresAt": "2026-10-03T08:18:59.940Z",
+      "createdAt": "2026-09-03T08:18:59.860Z",
+      "userAgent": "node",
+      "ipAddress": "127.0.0.1"
+    },
+    {
+      "token": "2de266aebfea4725508ec0097de84e1d283c5cdce4b2cce06a133354daf9e584",
+      "userId": "usr_2c99fc6bc89233d18bf90056",
+      "expiresAt": "2026-10-03T08:19:00.026Z",
+      "createdAt": "2026-09-03T08:19:00.026Z",
+      "userAgent": "node",
+      "ipAddress": "127.0.0.1"
+    },
+    {
+      "token": "99d3ffdde05d5c3c65599230930bfd8dc1dead234e151ad260f31103f5b5ede9",
+      "userId": "usr_2c99fc6bc89233d18bf90056",
+      "expiresAt": "2026-10-03T08:19:00.075Z",
+      "createdAt": "2026-09-03T08:19:00.074Z",
+      "userAgent": "node",
+      "ipAddress": "127.0.0.1"
+    },
+    {
+      "token": "e27681684f7cc070e322b50b22d29e317ebf93eb66b9d298813908d6c8c5da44",
+      "userId": "usr_demo_creator",
+      "expiresAt": "2026-10-03T08:20:09.731Z",
+      "createdAt": "2026-09-03T08:20:09.731Z",
+      "userAgent": "node",
+      "ipAddress": "127.0.0.1"
+    },
+    {
+      "token": "652fa42f78fd22df494e0214057e45708e4f0d788418ff7ea82d368dcf0d19b7",
+      "userId": "usr_demo_creator",
+      "expiresAt": "2026-10-03T08:21:22.922Z",
+      "createdAt": "2026-09-03T08:21:22.921Z",
+      "userAgent": "node",
+      "ipAddress": "127.0.0.1"
+    },
+    {
+      "token": "657581e89dd15145d117bf58a4ff56d9521a98d1162eef94c75aae97fa1b2b76",
+      "userId": "usr_073660e764efaa2a4e0af63d",
+      "expiresAt": "2026-10-06T16:56:11.611Z",
+      "createdAt": "2026-09-06T16:56:11.536Z",
+      "userAgent": "curl/7.88.1",
+      "ipAddress": "127.0.0.1"
+    }
+  ],
+  "organizations": [
+    {
+      "id": "org_c34e387a5ab77a7bdf458e53",
+      "name": "Alex Studio",
+      "slug": "alex-studio-1267",
+      "createdById": "usr_4c6584b94a7cba32f8ac5c5e",
+      "createdAt": "2026-08-31T07:51:31.480Z",
+      "updatedAt": "2026-08-31T07:51:31.480Z",
+      "ownerId": "usr_4c6584b94a7cba32f8ac5c5e"
+    },
+    {
+      "id": "org_1788347805718_h4ihs",
+      "name": "Youtuber Xrp's Workspace",
+      "slug": "youtuber-xrp-s-workspace-3387",
+      "ownerId": "usr_63e223a9fc6adc1ff8b5a87a",
+      "createdById": "usr_63e223a9fc6adc1ff8b5a87a",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-02T11:16:45.718Z",
+      "updatedAt": "2026-09-02T11:16:45.718Z"
+    },
+    {
+      "id": "org_1788347805718_o1898",
+      "name": "Unverified User's Workspace",
+      "slug": "unverified-user-s-workspace-9736",
+      "ownerId": "usr_c655046b6a62bed425579fd8",
+      "createdById": "usr_c655046b6a62bed425579fd8",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-02T11:16:45.718Z",
+      "updatedAt": "2026-09-02T11:16:45.718Z"
+    },
+    {
+      "id": "org_1788422294751_i7vqn",
+      "name": "Alex Morgan's Workspace",
+      "slug": "alex-morgan-s-workspace-5288",
+      "ownerId": "usr_c4f4f74cf7463bc178b44567",
+      "createdById": "usr_c4f4f74cf7463bc178b44567",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-03T07:58:14.751Z",
+      "updatedAt": "2026-09-03T07:58:14.751Z"
+    },
+    {
+      "id": "org_1788422304649_bttqj",
+      "name": "Himanshu Test's Workspace",
+      "slug": "himanshu-test-s-workspace-9753",
+      "ownerId": "usr_4bfce9baddb44fc37289b3b2",
+      "createdById": "usr_4bfce9baddb44fc37289b3b2",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-03T07:58:24.649Z",
+      "updatedAt": "2026-09-03T07:58:24.649Z"
+    },
+    {
+      "id": "org_67eb416ebe822548a617bfe1",
+      "name": "Youtuber's Workspace",
+      "slug": "youtuber-xrp-s-workspace",
+      "ownerId": "usr_65e564e434539510fd5e8b2a",
+      "createdById": "usr_65e564e434539510fd5e8b2a",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-03T08:06:20.365Z",
+      "updatedAt": "2026-09-03T08:06:58.760Z"
+    },
+    {
+      "id": "org_demo_workspace",
+      "name": "Creator's Channel Studio",
+      "slug": "creator-studio-demo",
+      "ownerId": "usr_demo_creator",
+      "createdById": "usr_demo_creator",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-03T08:20:05.382Z",
+      "updatedAt": "2026-09-03T08:20:05.382Z"
+    },
+    {
+      "id": "org_1788423605383_m8796",
+      "name": "Test Creator's Workspace",
+      "slug": "test-creator-s-workspace-7229",
+      "ownerId": "usr_2c99fc6bc89233d18bf90056",
+      "createdById": "usr_2c99fc6bc89233d18bf90056",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-03T08:20:05.383Z",
+      "updatedAt": "2026-09-03T08:20:05.383Z"
+    },
+    {
+      "id": "ws_usr_test_example_com",
+      "name": "test's Workspace",
+      "slug": "workspace",
+      "createdById": "usr_test_example_com",
+      "ownerId": "usr_test_example_com",
+      "createdAt": "2026-09-06T16:35:27.424Z",
+      "updatedAt": "2026-09-06T16:35:27.424Z"
+    },
+    {
+      "id": "ws_1788711772074",
+      "name": "creator.demo's Workspace",
+      "slug": "workspace",
+      "createdById": "usr_creator_demo_prescan_local",
+      "ownerId": "usr_creator_demo_prescan_local",
+      "createdAt": "2026-09-06T16:36:17.873Z",
+      "updatedAt": "2026-09-06T16:36:17.873Z"
+    },
+    {
+      "id": "org_1a565fea2e524c7e247407b4",
+      "name": "Test Creator's Workspace",
+      "slug": "test-creator-s-workspace-3835",
+      "ownerId": "usr_073660e764efaa2a4e0af63d",
+      "createdById": "usr_073660e764efaa2a4e0af63d",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-06T16:56:28.804Z",
+      "updatedAt": "2026-09-06T16:56:28.804Z"
+    }
+  ],
+  "memberships": [
+    {
+      "id": "mem_510005c1fe21736e36a44d03",
+      "organizationId": "org_c34e387a5ab77a7bdf458e53",
+      "userId": "usr_4c6584b94a7cba32f8ac5c5e",
+      "role": "OWNER",
+      "joinedAt": "2026-08-31T07:51:31.480Z",
+      "updatedAt": "2026-08-31T07:51:31.480Z"
+    },
+    {
+      "id": "mem_1788347805718_h8fwd",
+      "organizationId": "org_1788347805718_h4ihs",
+      "userId": "usr_63e223a9fc6adc1ff8b5a87a",
+      "role": "OWNER",
+      "status": "ACTIVE",
+      "joinedAt": "2026-09-02T11:16:45.718Z",
+      "createdAt": "2026-09-02T11:16:45.718Z",
+      "updatedAt": "2026-09-02T11:16:45.718Z"
+    },
+    {
+      "id": "mem_1788347805718_9xvmx",
+      "organizationId": "org_1788347805718_o1898",
+      "userId": "usr_c655046b6a62bed425579fd8",
+      "role": "OWNER",
+      "status": "ACTIVE",
+      "joinedAt": "2026-09-02T11:16:45.718Z",
+      "createdAt": "2026-09-02T11:16:45.718Z",
+      "updatedAt": "2026-09-02T11:16:45.718Z"
+    },
+    {
+      "id": "mem_1788422294752_9agqu",
+      "organizationId": "org_1788422294751_i7vqn",
+      "userId": "usr_c4f4f74cf7463bc178b44567",
+      "role": "OWNER",
+      "status": "ACTIVE",
+      "joinedAt": "2026-09-03T07:58:14.751Z",
+      "createdAt": "2026-09-03T07:58:14.751Z",
+      "updatedAt": "2026-09-03T07:58:14.751Z"
+    },
+    {
+      "id": "mem_1788422304649_62qfm",
+      "organizationId": "org_1788422304649_bttqj",
+      "userId": "usr_4bfce9baddb44fc37289b3b2",
+      "role": "OWNER",
+      "status": "ACTIVE",
+      "joinedAt": "2026-09-03T07:58:24.649Z",
+      "createdAt": "2026-09-03T07:58:24.649Z",
+      "updatedAt": "2026-09-03T07:58:24.649Z"
+    },
+    {
+      "id": "mem_fef4480da091d45fa16bdfdf",
+      "organizationId": "org_67eb416ebe822548a617bfe1",
+      "userId": "usr_65e564e434539510fd5e8b2a",
+      "role": "OWNER",
+      "status": "ACTIVE",
+      "joinedAt": "2026-09-03T08:06:20.365Z",
+      "createdAt": "2026-09-03T08:06:20.365Z",
+      "updatedAt": "2026-09-03T08:06:20.365Z"
+    },
+    {
+      "id": "mem_demo_creator",
+      "organizationId": "org_demo_workspace",
+      "userId": "usr_demo_creator",
+      "role": "OWNER",
+      "status": "ACTIVE",
+      "joinedAt": "2026-09-03T08:20:05.382Z",
+      "createdAt": "2026-09-03T08:20:05.382Z",
+      "updatedAt": "2026-09-03T08:20:05.382Z"
+    },
+    {
+      "id": "mem_1788423605383_h5x4a",
+      "organizationId": "org_1788423605383_m8796",
+      "userId": "usr_2c99fc6bc89233d18bf90056",
+      "role": "OWNER",
+      "status": "ACTIVE",
+      "joinedAt": "2026-09-03T08:20:05.383Z",
+      "createdAt": "2026-09-03T08:20:05.383Z",
+      "updatedAt": "2026-09-03T08:20:05.383Z"
+    },
+    {
+      "id": "mem_usr_test_example_com_ws_usr_test_example_com",
+      "organizationId": "ws_usr_test_example_com",
+      "userId": "usr_test_example_com",
+      "role": "OWNER",
+      "joinedAt": "2026-09-06T16:35:27.424Z",
+      "updatedAt": "2026-09-06T16:35:27.424Z"
+    },
+    {
+      "id": "mem_usr_creator_demo_prescan_local_ws_1788711772074",
+      "organizationId": "ws_1788711772074",
+      "userId": "usr_creator_demo_prescan_local",
+      "role": "OWNER",
+      "joinedAt": "2026-09-06T16:36:17.873Z",
+      "updatedAt": "2026-09-06T16:36:17.873Z"
+    },
+    {
+      "id": "mem_d1d5583bba4ce7e9fb8fcd79",
+      "organizationId": "org_1a565fea2e524c7e247407b4",
+      "userId": "usr_073660e764efaa2a4e0af63d",
+      "role": "OWNER",
+      "status": "ACTIVE",
+      "joinedAt": "2026-09-06T16:56:28.804Z",
+      "createdAt": "2026-09-06T16:56:28.804Z",
+      "updatedAt": "2026-09-06T16:56:28.804Z"
+    }
+  ],
+  "invitations": [],
+  "onboarding": [
+    {
+      "userId": "usr_63e223a9fc6adc1ff8b5a87a",
+      "step": 1,
+      "status": "IN_PROGRESS",
+      "updatedAt": "2026-08-31T07:38:01.438Z"
+    },
+    {
+      "userId": "usr_4c6584b94a7cba32f8ac5c5e",
+      "step": 4,
+      "status": "COMPLETED",
+      "updatedAt": "2026-08-31T07:51:31.481Z",
+      "creatorType": "solo_creator",
+      "contentTypes": [
+        "gaming",
+        "tech"
+      ],
+      "publishFrequency": "weekly",
+      "workspaceName": "Alex Studio",
+      "completedAt": "2026-08-31T07:51:31.480Z"
+    },
+    {
+      "userId": "usr_c655046b6a62bed425579fd8",
+      "step": 1,
+      "status": "IN_PROGRESS",
+      "updatedAt": "2026-08-31T07:51:43.407Z"
+    },
+    {
+      "userId": "usr_c4f4f74cf7463bc178b44567",
+      "step": 1,
+      "status": "IN_PROGRESS",
+      "updatedAt": "2026-09-03T07:55:28.501Z"
+    },
+    {
+      "userId": "usr_4bfce9baddb44fc37289b3b2",
+      "step": 1,
+      "status": "IN_PROGRESS",
+      "updatedAt": "2026-09-03T07:58:18.319Z"
+    },
+    {
+      "userId": "usr_65e564e434539510fd5e8b2a",
+      "step": 4,
+      "status": "COMPLETED",
+      "updatedAt": "2026-09-03T08:06:58.761Z",
+      "creatorType": "solo_creator",
+      "contentTypes": [
+        "education"
+      ],
+      "publishFrequency": "daily",
+      "workspaceName": "Youtuber's Workspace",
+      "completedAt": "2026-09-03T08:06:58.760Z"
+    },
+    {
+      "userId": "usr_2c99fc6bc89233d18bf90056",
+      "step": 1,
+      "status": "IN_PROGRESS",
+      "updatedAt": "2026-09-03T08:18:59.939Z"
+    },
+    {
+      "userId": "usr_demo_creator",
+      "step": 3,
+      "status": "COMPLETED",
+      "completedAt": "2026-09-03T08:20:05.382Z",
+      "createdAt": "2026-09-03T08:20:05.382Z",
+      "updatedAt": "2026-09-03T08:20:05.382Z"
+    },
+    {
+      "userId": "usr_073660e764efaa2a4e0af63d",
+      "step": 4,
+      "status": "COMPLETED",
+      "updatedAt": "2026-09-06T16:56:28.808Z",
+      "creatorType": "SOLO_CREATOR",
+      "workspaceName": "Test Creator's Workspace",
+      "completedAt": "2026-09-06T16:56:28.804Z"
+    }
+  ],
+  "verificationTokens": [
+    {
+      "token": "7c6ef878b25e85b4b6c979150cf20ccd98deb9f0d580c3391903ce441a979fc1",
+      "userId": "usr_63e223a9fc6adc1ff8b5a87a",
+      "email": "himanshu9968014@gmail.com",
+      "expiresAt": "2026-09-01T07:38:01.438Z",
+      "createdAt": "2026-08-31T07:38:01.380Z",
+      "usedAt": "2026-08-31T07:40:11.118Z"
+    },
+    {
+      "token": "bc3b6c6a0e260b5183be4227808d3e5aadfa42d95aebd6b3a120c2c8991aad9d",
+      "userId": "usr_4c6584b94a7cba32f8ac5c5e",
+      "email": "alex.test@example.com",
+      "expiresAt": "2026-09-01T07:51:17.467Z",
+      "createdAt": "2026-08-31T07:51:17.408Z"
+    },
+    {
+      "token": "f92ccf1fc767e9cf9b8968736a8a6bbd1fe9be28e1249c58c06c16bab5c93e8c",
+      "userId": "usr_c655046b6a62bed425579fd8",
+      "email": "unverified@example.com",
+      "expiresAt": "2026-09-01T07:51:43.406Z",
+      "createdAt": "2026-08-31T07:51:43.361Z"
+    },
+    {
+      "token": "1c6758bd666ec9fa95e604adcb487ce165214bee004ef227434059012dd996a4",
+      "userId": "usr_c4f4f74cf7463bc178b44567",
+      "email": "alex@test.com",
+      "expiresAt": "2026-09-04T07:55:28.484Z",
+      "createdAt": "2026-09-03T07:55:28.420Z"
+    },
+    {
+      "token": "b495a59f87307bd2b37e6cd2e6187a4db7e92e2eb210ae0fcd6576284bb7bcf1",
+      "userId": "usr_4bfce9baddb44fc37289b3b2",
+      "email": "himanshu_check@test.com",
+      "expiresAt": "2026-09-04T07:58:18.304Z",
+      "createdAt": "2026-09-03T07:58:18.241Z"
+    },
+    {
+      "token": "abd9f79a669680c8a9c2c8b15a40ce99ca6a31c51717e1d87ae58d1dc4f0254a",
+      "userId": "usr_65e564e434539510fd5e8b2a",
+      "email": "himanshu996801452@gmail.com",
+      "expiresAt": "2026-09-04T08:06:20.235Z",
+      "createdAt": "2026-09-03T08:06:20.173Z"
+    },
+    {
+      "token": "93078f500f8fc2dc7e66ea1e47ee1c5b996d790b0638779ff0990a49f6c5f775",
+      "userId": "usr_2c99fc6bc89233d18bf90056",
+      "email": "verified_test_1788423539758@channel.com",
+      "expiresAt": "2026-09-04T08:18:59.923Z",
+      "createdAt": "2026-09-03T08:18:59.860Z"
+    }
+  ],
+  "otpChallenges": [
+    {
+      "id": "otp_34626652d5dec5d72969134e",
+      "userId": "usr_4c6584b94a7cba32f8ac5c5e",
+      "email": "alex.test@example.com",
+      "otpHash": "79eb9e3f02b6da6f9141dadf342c45ee6e18d04b7ccd2417555b75d12f29ddb3",
+      "salt": "0dac195e8a4406c204150f4fa06943e6",
+      "expiresAt": "2026-08-31T08:01:17.467Z",
+      "attemptCount": 0,
+      "maxAttempts": 5,
+      "createdAt": "2026-08-31T07:51:17.467Z",
+      "lastResentAt": "2026-08-31T07:51:17.467Z",
+      "usedAt": "2026-08-31T07:51:27.986Z"
+    },
+    {
+      "id": "otp_b4c00b70c1634cd4a6b14ba9",
+      "userId": "usr_c655046b6a62bed425579fd8",
+      "email": "unverified@example.com",
+      "otpHash": "295967c8684340860a7364912681cd67068c4ac3c909905ad40fd35c2188428d",
+      "salt": "d87046330ece32bb71b7c7786272c65b",
+      "expiresAt": "2026-08-31T08:01:43.406Z",
+      "attemptCount": 0,
+      "maxAttempts": 5,
+      "createdAt": "2026-08-31T07:51:43.406Z",
+      "lastResentAt": "2026-08-31T07:51:43.406Z"
+    },
+    {
+      "id": "otp_3928e217499ce07681cae644",
+      "userId": "usr_c4f4f74cf7463bc178b44567",
+      "email": "alex@test.com",
+      "otpHash": "297b5531794f2a443c24e55ae51162f5ec37796374160da69f206b139254af5b",
+      "salt": "96ef3efbba5801bd779fa9a82b0dacf2",
+      "expiresAt": "2026-09-03T08:05:28.484Z",
+      "attemptCount": 0,
+      "maxAttempts": 5,
+      "createdAt": "2026-09-03T07:55:28.484Z",
+      "lastResentAt": "2026-09-03T07:55:28.484Z"
+    },
+    {
+      "id": "otp_93260a4e641dfd165074f94a",
+      "userId": "usr_4bfce9baddb44fc37289b3b2",
+      "email": "himanshu_check@test.com",
+      "otpHash": "75b16e44bc5f67127c0eeea034ce8e80e854fae25737c2f2bc30db7fd4bcedde",
+      "salt": "ed722d1088fcfba12ad50e6ce0f25828",
+      "expiresAt": "2026-09-03T08:08:18.304Z",
+      "attemptCount": 0,
+      "maxAttempts": 5,
+      "createdAt": "2026-09-03T07:58:18.304Z",
+      "lastResentAt": "2026-09-03T07:58:18.304Z"
+    },
+    {
+      "id": "otp_80a26ad3b30c066391d90d68",
+      "userId": "usr_65e564e434539510fd5e8b2a",
+      "email": "himanshu996801452@gmail.com",
+      "otpHash": "ac0f33fbcb106f1011c00dc7eb7061e42701bc827c5cac5f90394bc85ccdbc73",
+      "salt": "4b1ec7d8f9786e66a5137ee30d0549dc",
+      "expiresAt": "2026-09-03T08:16:20.235Z",
+      "attemptCount": 0,
+      "maxAttempts": 5,
+      "createdAt": "2026-09-03T08:06:20.235Z",
+      "lastResentAt": "2026-09-03T08:06:20.235Z",
+      "usedAt": "2026-09-03T08:06:47.405Z"
+    },
+    {
+      "id": "otp_9a827acd9d0565b2da082638",
+      "userId": "usr_2c99fc6bc89233d18bf90056",
+      "email": "verified_test_1788423539758@channel.com",
+      "otpHash": "696a5bfe99d5d91d1b3b841c108269baef972480c9f236955b5c86bc09a71875",
+      "salt": "b82e87163a4200e9b60f8af360f26b0e",
+      "expiresAt": "2026-09-03T08:28:59.922Z",
+      "attemptCount": 0,
+      "maxAttempts": 5,
+      "createdAt": "2026-09-03T08:18:59.922Z",
+      "lastResentAt": "2026-09-03T08:18:59.922Z",
+      "usedAt": "2026-09-03T08:19:00.025Z"
+    }
+  ],
+  "passwordResetTokens": [
+    {
+      "token": "6249bb59d8dbb224821d5a3295368a78b0e3a55e8386a75a3371b696e6e20a0c",
+      "userId": "usr_demo_creator",
+      "expiresAt": "2026-09-03T09:21:23.027Z",
+      "createdAt": "2026-09-03T08:21:23.027Z"
+    }
+  ],
+  "auditLogs": [
+    {
+      "id": "audit_1788713792221_4i1ef",
+      "organizationId": "org_1a565fea2e524c7e247407b4",
+      "actorUserId": "usr_073660e764efaa2a4e0af63d",
+      "action": "USAGE_SCAN_CONSUMED",
+      "targetResourceType": "SCAN",
+      "targetResourceId": "scan_bcd84458483b45519e1912cf",
+      "metadataJson": "{\"scansUsed\":1,\"scanLimit\":5,\"plan\":\"FREE\"}",
+      "createdAt": "2026-09-06T16:56:32.220Z"
+    },
+    {
+      "id": "audit_d43b59e4dd2927ce882b9bfa",
+      "organizationId": "org_1a565fea2e524c7e247407b4",
+      "actorUserId": "usr_073660e764efaa2a4e0af63d",
+      "action": "SCAN_INITIATED",
+      "targetResourceType": "SCAN",
+      "targetResourceId": "scan_bcd84458483b45519e1912cf",
+      "metadataJson": "{\"sourceType\":\"youtube_url\",\"videoId\":\"jNQXAC9IVRw\",\"url\":\"https://www.youtube.com/watch?v=jNQXAC9IVRw\"}",
+      "createdAt": "2026-09-06T16:56:32.161Z"
+    },
+    {
+      "id": "aud_d482b79219c4a26f993493b6",
+      "organizationId": "org_1a565fea2e524c7e247407b4",
+      "actorUserId": "usr_073660e764efaa2a4e0af63d",
+      "action": "ONBOARDING_COMPLETED",
+      "ipAddress": "127.0.0.1",
+      "createdAt": "2026-09-06T16:56:28.804Z"
+    },
+    {
+      "id": "aud_368e58f590d7d92eb3ff50fa",
+      "organizationId": "org_1a565fea2e524c7e247407b4",
+      "actorUserId": "usr_073660e764efaa2a4e0af63d",
+      "action": "WORKSPACE_CREATED",
+      "targetResourceType": "WORKSPACE",
+      "targetResourceId": "org_1a565fea2e524c7e247407b4",
+      "metadataJson": "{\"name\":\"Test Creator's Workspace\"}",
+      "ipAddress": "127.0.0.1",
+      "createdAt": "2026-09-06T16:56:28.804Z"
+    },
+    {
+      "id": "aud_f17d0fdcbffb23e3dc0b5dc1",
+      "actorUserId": "usr_073660e764efaa2a4e0af63d",
+      "action": "USER_REGISTERED",
+      "metadataJson": "{\"email\":\"creator@test.com\"}",
+      "ipAddress": "127.0.0.1",
+      "createdAt": "2026-09-06T16:56:11.536Z"
+    },
+    {
+      "id": "audit_1788713112719_kcea8",
+      "organizationId": "ws_1788711772074",
+      "actorUserId": "usr_creator_demo_prescan_local",
+      "action": "USAGE_SCAN_CONSUMED",
+      "targetResourceType": "SCAN",
+      "targetResourceId": "scan_688169abedd79a212a36ecb9",
+      "metadataJson": "{\"scansUsed\":1,\"scanLimit\":5,\"plan\":\"FREE\"}",
+      "createdAt": "2026-09-06T16:45:12.718Z"
+    },
+    {
+      "id": "audit_5be7be7fed6b3fe5f472624c",
+      "organizationId": "ws_1788711772074",
+      "actorUserId": "usr_creator_demo_prescan_local",
+      "action": "SCAN_INITIATED",
+      "targetResourceType": "SCAN",
+      "targetResourceId": "scan_688169abedd79a212a36ecb9",
+      "metadataJson": "{\"sourceType\":\"youtube_url\",\"videoId\":\"lWBj9z2xDDs\",\"url\":\"https://www.youtube.com/watch?v=lWBj9z2xDDs\"}",
+      "createdAt": "2026-09-06T16:45:12.688Z"
+    },
+    {
+      "id": "aud_63a57bfefafb8670d3e1abf6",
+      "actorUserId": "usr_demo_creator",
+      "action": "PASSWORD_RESET_REQUESTED",
+      "ipAddress": "127.0.0.1",
+      "createdAt": "2026-09-03T08:21:23.027Z"
+    },
+    {
+      "id": "aud_9d9b47ef5cccd4d3b5448c6a",
+      "actorUserId": "usr_demo_creator",
+      "action": "USER_LOGGED_IN",
+      "ipAddress": "127.0.0.1",
+      "createdAt": "2026-09-03T08:21:22.921Z"
+    },
+    {
+      "id": "aud_33b5f7b1feb04266b727d3d7",
+      "actorUserId": "usr_demo_creator",
+      "action": "USER_LOGGED_IN",
+      "ipAddress": "127.0.0.1",
+      "createdAt": "2026-09-03T08:20:09.731Z"
+    },
+    {
+      "id": "aud_637f48a74c89251bc6dbea5e",
+      "actorUserId": "usr_2c99fc6bc89233d18bf90056",
+      "action": "USER_LOGGED_IN",
+      "ipAddress": "127.0.0.1",
+      "createdAt": "2026-09-03T08:19:00.074Z"
+    },
+    {
+      "id": "aud_f87077f4b3b58da80e69feb2",
+      "actorUserId": "usr_2c99fc6bc89233d18bf90056",
+      "action": "EMAIL_VERIFIED",
+      "metadataJson": "{\"email\":\"verified_test_1788423539758@channel.com\",\"method\":\"OTP\"}",
+      "ipAddress": "127.0.0.1",
+      "createdAt": "2026-09-03T08:19:00.027Z"
+    },
+    {
+      "id": "aud_b3ba7038faac415c65570354",
+      "actorUserId": "usr_2c99fc6bc89233d18bf90056",
+      "action": "USER_REGISTERED",
+      "metadataJson": "{\"email\":\"verified_test_1788423539758@channel.com\"}",
+      "ipAddress": "127.0.0.1",
+      "createdAt": "2026-09-03T08:18:59.860Z"
+    },
+    {
+      "id": "aud_9b08c6970739712728a281ae",
+      "organizationId": "org_67eb416ebe822548a617bfe1",
+      "actorUserId": "usr_65e564e434539510fd5e8b2a",
+      "action": "ONBOARDING_COMPLETED",
+      "ipAddress": "127.0.0.1",
+      "createdAt": "2026-09-03T08:06:58.760Z"
+    },
+    {
+      "id": "aud_911b618032577be7e5523f09",
+      "actorUserId": "usr_65e564e434539510fd5e8b2a",
+      "action": "EMAIL_VERIFIED",
+      "metadataJson": "{\"email\":\"himanshu996801452@gmail.com\",\"method\":\"OTP\"}",
+      "ipAddress": "127.0.0.1",
+      "createdAt": "2026-09-03T08:06:47.406Z"
+    },
+    {
+      "id": "aud_9dab815ba64735b9b2a3eded",
+      "actorUserId": "usr_65e564e434539510fd5e8b2a",
+      "action": "USER_REGISTERED",
+      "metadataJson": "{\"email\":\"himanshu996801452@gmail.com\"}",
+      "ipAddress": "127.0.0.1",
+      "createdAt": "2026-09-03T08:06:20.173Z"
+    },
+    {
+      "id": "aud_78be2add5d84cb74e9e34481",
+      "actorUserId": "usr_4bfce9baddb44fc37289b3b2",
+      "action": "USER_REGISTERED",
+      "metadataJson": "{\"email\":\"himanshu_check@test.com\"}",
+      "ipAddress": "127.0.0.1",
+      "createdAt": "2026-09-03T07:58:18.241Z"
+    },
+    {
+      "id": "aud_7c82c4a35bbb217ea9a97548",
+      "actorUserId": "usr_c4f4f74cf7463bc178b44567",
+      "action": "USER_REGISTERED",
+      "metadataJson": "{\"email\":\"alex@test.com\"}",
+      "ipAddress": "127.0.0.1",
+      "createdAt": "2026-09-03T07:55:28.420Z"
+    },
+    {
+      "id": "aud_31791e0a844b5a6524c5fa34",
+      "actorUserId": "usr_63e223a9fc6adc1ff8b5a87a",
+      "action": "USER_REGISTERED",
+      "metadataJson": "{\"email\":\"himanshu9968014@gmail.com\"}",
+      "ipAddress": "127.0.0.1",
+      "createdAt": "2026-08-31T07:38:01.380Z"
+    },
+    {
+      "id": "aud_bfa353c56c10c01208839aeb",
+      "actorUserId": "usr_63e223a9fc6adc1ff8b5a87a",
+      "action": "USER_LOGGED_IN",
+      "ipAddress": "127.0.0.1",
+      "createdAt": "2026-08-31T07:39:05.790Z"
+    },
+    {
+      "id": "aud_d4c406512c657ee0b275d2aa",
+      "actorUserId": "usr_63e223a9fc6adc1ff8b5a87a",
+      "action": "EMAIL_VERIFIED",
+      "metadataJson": "{\"email\":\"himanshu9968014@gmail.com\"}",
+      "ipAddress": "127.0.0.1",
+      "createdAt": "2026-08-31T07:40:11.118Z"
+    },
+    {
+      "id": "aud_58e62ef02fab56851ebdb252",
+      "actorUserId": "usr_4c6584b94a7cba32f8ac5c5e",
+      "action": "USER_REGISTERED",
+      "metadataJson": "{\"email\":\"alex.test@example.com\"}",
+      "ipAddress": "127.0.0.1",
+      "createdAt": "2026-08-31T07:51:17.408Z"
+    },
+    {
+      "id": "aud_1da559313392f73778299bdd",
+      "actorUserId": "usr_4c6584b94a7cba32f8ac5c5e",
+      "action": "EMAIL_VERIFIED",
+      "metadataJson": "{\"email\":\"alex.test@example.com\",\"method\":\"OTP\"}",
+      "ipAddress": "127.0.0.1",
+      "createdAt": "2026-08-31T07:51:27.987Z"
+    },
+    {
+      "id": "aud_c6bdf5ae95474c337f3df395",
+      "organizationId": "org_c34e387a5ab77a7bdf458e53",
+      "actorUserId": "usr_4c6584b94a7cba32f8ac5c5e",
+      "action": "WORKSPACE_CREATED",
+      "metadataJson": "{\"name\":\"Alex Studio\"}",
+      "ipAddress": "127.0.0.1",
+      "createdAt": "2026-08-31T07:51:31.480Z"
+    },
+    {
+      "id": "aud_d32e07c360da5dff48930fb1",
+      "organizationId": "org_c34e387a5ab77a7bdf458e53",
+      "actorUserId": "usr_4c6584b94a7cba32f8ac5c5e",
+      "action": "ONBOARDING_COMPLETED",
+      "ipAddress": "127.0.0.1",
+      "createdAt": "2026-08-31T07:51:31.480Z"
+    },
+    {
+      "id": "aud_194d73723621b8c2136728d2",
+      "actorUserId": "usr_4c6584b94a7cba32f8ac5c5e",
+      "action": "USER_LOGGED_IN",
+      "ipAddress": "127.0.0.1",
+      "createdAt": "2026-08-31T07:51:39.986Z"
+    },
+    {
+      "id": "aud_fff457e225c05258f5988c80",
+      "actorUserId": "usr_c655046b6a62bed425579fd8",
+      "action": "USER_REGISTERED",
+      "metadataJson": "{\"email\":\"unverified@example.com\"}",
+      "ipAddress": "127.0.0.1",
+      "createdAt": "2026-08-31T07:51:43.361Z"
+    }
+  ],
+  "mailLog": [
+    {
+      "id": "msg_fb32b04850f6abdb24b78b21",
+      "to": "creator@prescan.dev",
+      "subject": "Reset your PreScan password",
+      "type": "RESET_PASSWORD",
+      "token": "http://localhost:3000/reset-password?token=6249bb59d8dbb224821d5a3295368a78b0e3a55e8386a75a3371b696e6e20a0c",
+      "actionUrl": "http://localhost:3000/reset-password?token=6249bb59d8dbb224821d5a3295368a78b0e3a55e8386a75a3371b696e6e20a0c",
+      "sentAt": "2026-09-03T08:21:23.028Z"
+    },
+    {
+      "id": "msg_6780637a85675391a37883bb",
+      "to": "verified_test_1788423539758@channel.com",
+      "subject": "219565 is your PreScan verification code",
+      "type": "VERIFY_EMAIL",
+      "token": "219565",
+      "actionUrl": "/verify-email?email=verified_test_1788423539758%40channel.com&code=219565",
+      "sentAt": "2026-09-03T08:18:59.923Z"
+    },
+    {
+      "id": "msg_e4291dc7cf316847fe21ebf3",
+      "to": "himanshu996801452@gmail.com",
+      "subject": "525101 is your PreScan verification code",
+      "type": "VERIFY_EMAIL",
+      "token": "525101",
+      "actionUrl": "/verify-email?email=himanshu996801452%40gmail.com&code=525101",
+      "sentAt": "2026-09-03T08:06:20.236Z"
+    },
+    {
+      "id": "msg_0c79eac2d0f3f5c5e3a8310a",
+      "to": "himanshu_check@test.com",
+      "subject": "725772 is your PreScan verification code",
+      "type": "VERIFY_EMAIL",
+      "token": "725772",
+      "actionUrl": "/verify-email?email=himanshu_check%40test.com&code=725772",
+      "sentAt": "2026-09-03T07:58:18.305Z"
+    },
+    {
+      "id": "msg_31b957cedb22569ea273b86a",
+      "to": "alex@test.com",
+      "subject": "797218 is your PreScan verification code",
+      "type": "VERIFY_EMAIL",
+      "token": "797218",
+      "actionUrl": "/verify-email?email=alex%40test.com&code=797218",
+      "sentAt": "2026-09-03T07:55:28.485Z"
+    },
+    {
+      "id": "msg_82620febece2cf0d940b0639",
+      "to": "unverified@example.com",
+      "subject": "205796 is your PreScan verification code",
+      "type": "VERIFY_EMAIL",
+      "token": "205796",
+      "actionUrl": "/verify-email?email=unverified%40example.com&code=205796",
+      "sentAt": "2026-08-31T07:51:43.407Z"
+    },
+    {
+      "id": "msg_0eb41fc3b033306fa72f2869",
+      "to": "alex.test@example.com",
+      "subject": "195116 is your PreScan verification code",
+      "type": "VERIFY_EMAIL",
+      "token": "195116",
+      "actionUrl": "/verify-email?email=alex.test%40example.com&code=195116",
+      "sentAt": "2026-08-31T07:51:17.467Z"
+    },
+    {
+      "id": "mail_97cfc882f3a5215e010bc385",
+      "to": "himanshu9968014@gmail.com",
+      "subject": "Verify your PreScan Creator account",
+      "type": "VERIFY_EMAIL",
+      "token": "7c6ef878b25e85b4b6c979150cf20ccd98deb9f0d580c3391903ce441a979fc1",
+      "actionUrl": "http://localhost:3000/verify-email?token=7c6ef878b25e85b4b6c979150cf20ccd98deb9f0d580c3391903ce441a979fc1",
+      "sentAt": "2026-08-31T07:38:01.380Z"
+    }
+  ],
+  "scans": [
+    {
+      "id": "scan_bcd84458483b45519e1912cf",
+      "organizationId": "org_1a565fea2e524c7e247407b4",
+      "title": "Me at the zoo",
+      "description": "",
+      "category": "entertainment",
+      "tags": [],
+      "madeForKids": false,
+      "language": "en",
+      "status": "COMPLETED",
+      "config": {
+        "checkCommunityGuidelines": true,
+        "checkAdvertiserSuitability": true,
+        "checkCopyrightSignals": true,
+        "checkMetadataIntegrity": true,
+        "targetLanguage": "en",
+        "sensitivityLevel": "STANDARD"
+      },
+      "sourceType": "youtube_url",
+      "source": {
+        "type": "youtube_url",
+        "url": "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+        "videoId": "jNQXAC9IVRw"
+      },
+      "mediaInfo": {
+        "youtubeVideoId": "jNQXAC9IVRw",
+        "youtubeUrl": "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+        "thumbnailUrl": "https://i.ytimg.com/vi/jNQXAC9IVRw/hqdefault.jpg",
+        "channelTitle": "jawed",
+        "format": "YouTube Stream"
+      },
+      "ingestionJobId": "ingest_5b927a543540d447f48f812e",
+      "progressPercent": 100,
+      "currentStepMessage": "PreScan analysis completed successfully.",
+      "overallRisk": "LOW",
+      "initiatedById": "usr_073660e764efaa2a4e0af63d",
+      "startedAt": "2026-09-06T16:56:32.161Z",
+      "createdAt": "2026-09-06T16:56:32.161Z",
+      "updatedAt": "2026-09-06T16:56:54.194Z",
+      "stage": "COMPLETED",
+      "attempts": 1,
+      "completedAt": "2026-09-06T16:56:53.841Z"
+    },
+    {
+      "id": "scan_688169abedd79a212a36ecb9",
+      "organizationId": "ws_1788711772074",
+      "title": "WEIRDEST INDIAN STREET FOOD 😵 | CARRYMINATI",
+      "description": "",
+      "category": "entertainment",
+      "tags": [],
+      "madeForKids": false,
+      "language": "hi",
+      "status": "COMPLETED",
+      "config": {
+        "checkCommunityGuidelines": true,
+        "checkAdvertiserSuitability": true,
+        "checkCopyrightSignals": true,
+        "checkMetadataIntegrity": true,
+        "targetCategory": "entertainment",
+        "targetLanguage": "hi",
+        "sensitivityLevel": "STRICT"
+      },
+      "sourceType": "youtube_url",
+      "source": {
+        "type": "youtube_url",
+        "url": "https://www.youtube.com/watch?v=lWBj9z2xDDs",
+        "videoId": "lWBj9z2xDDs"
+      },
+      "mediaInfo": {
+        "youtubeVideoId": "lWBj9z2xDDs",
+        "youtubeUrl": "https://www.youtube.com/watch?v=lWBj9z2xDDs",
+        "thumbnailUrl": "https://i.ytimg.com/vi/lWBj9z2xDDs/hqdefault.jpg",
+        "channelTitle": "CarryMinati",
+        "format": "Public YouTube Video URL"
+      },
+      "ingestionJobId": "ingest_aed3444f2b4a0ea7c12b56ad",
+      "progressPercent": 100,
+      "currentStepMessage": "PreScan analysis completed successfully.",
+      "overallRisk": "LOW",
+      "initiatedById": "usr_creator_demo_prescan_local",
+      "startedAt": "2026-09-06T16:45:12.688Z",
+      "createdAt": "2026-09-06T16:45:12.688Z",
+      "updatedAt": "2026-09-06T16:45:21.796Z",
+      "stage": "COMPLETED",
+      "attempts": 1,
+      "completedAt": "2026-09-06T16:45:21.446Z"
+    }
+  ],
+  "ingestionJobs": [
+    {
+      "id": "ingest_5b927a543540d447f48f812e",
+      "scanId": "scan_bcd84458483b45519e1912cf",
+      "organizationId": "org_1a565fea2e524c7e247407b4",
+      "status": "READY_FOR_ANALYSIS",
+      "sourceType": "youtube_url",
+      "sourceDetails": {
+        "youtubeUrl": "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+        "youtubeVideoId": "jNQXAC9IVRw"
+      },
+      "progressPercent": 100,
+      "currentStep": "PreScan analysis completed successfully.",
+      "logs": [
+        {
+          "timestamp": "2026-09-06T16:56:32.161Z",
+          "level": "INFO",
+          "message": "YouTube URL accepted: https://www.youtube.com/watch?v=jNQXAC9IVRw"
+        },
+        {
+          "timestamp": "2026-09-06T16:56:32.161Z",
+          "level": "SUCCESS",
+          "message": "SSRF host verification passed: jNQXAC9IVRw"
+        },
+        {
+          "timestamp": "2026-09-06T16:56:32.223Z",
+          "level": "INFO",
+          "message": "Pipeline execution started (Attempt 1)"
+        },
+        {
+          "timestamp": "2026-09-06T16:56:32.225Z",
+          "level": "INFO",
+          "message": "Starting scan pipeline for \"Me at the zoo\" (ID: scan_bcd84458483b45519e1912cf)"
+        },
+        {
+          "timestamp": "2026-09-06T16:56:32.578Z",
+          "level": "INFO",
+          "message": "Validating media input parameters and workspace security constraints..."
+        },
+        {
+          "timestamp": "2026-09-06T16:56:32.579Z",
+          "level": "SUCCESS",
+          "message": "YouTube URL and SSRF verification passed (Video ID: jNQXAC9IVRw)"
+        },
+        {
+          "timestamp": "2026-09-06T16:56:32.981Z",
+          "level": "INFO",
+          "message": "Querying public metadata for YouTube video jNQXAC9IVRw..."
+        },
+        {
+          "timestamp": "2026-09-06T16:56:33.000Z",
+          "level": "SUCCESS",
+          "message": "Metadata resolved: \"Me at the zoo\" by jawed"
+        },
+        {
+          "timestamp": "2026-09-06T16:56:33.403Z",
+          "level": "INFO",
+          "message": "Preparing public YouTube video stream for Gemini multimodal ingestion: https://www.youtube.com/watch?v=jNQXAC9IVRw"
+        },
+        {
+          "timestamp": "2026-09-06T16:56:33.403Z",
+          "level": "SUCCESS",
+          "message": "YouTube stream linked for Gemini multimodal analysis (https://www.youtube.com/watch?v=jNQXAC9IVRw)"
+        },
+        {
+          "timestamp": "2026-09-06T16:56:33.807Z",
+          "level": "INFO",
+          "message": "Verifying audio channels, sample rates, and spoken track integrity..."
+        },
+        {
+          "timestamp": "2026-09-06T16:56:34.260Z",
+          "level": "INFO",
+          "message": "Performing speech-to-text recognition with Gemini AI speech engine..."
+        },
+        {
+          "timestamp": "2026-09-06T16:56:34.262Z",
+          "level": "INFO",
+          "message": "Evaluating profanity, hate speech, advertiser suitability, and copyright rights..."
+        },
+        {
+          "timestamp": "2026-09-06T16:56:53.837Z",
+          "level": "SUCCESS",
+          "message": "Transcript generated with 1 timestamped segment(s)"
+        },
+        {
+          "timestamp": "2026-09-06T16:56:53.840Z",
+          "level": "INFO",
+          "message": "Validating structured findings, severity weights, and grounding disclaimers..."
+        },
+        {
+          "timestamp": "2026-09-06T16:56:53.842Z",
+          "level": "SUCCESS",
+          "message": "PreScan V1 Report saved (Report ID: report_ed03eaa786cb66868e401205)"
+        },
+        {
+          "timestamp": "2026-09-06T16:56:54.197Z",
+          "level": "SUCCESS",
+          "message": "PreScan completed: Overall Risk LOW, 0 finding(s)."
+        }
+      ],
+      "createdAt": "2026-09-06T16:56:32.161Z",
+      "updatedAt": "2026-09-06T16:56:54.197Z"
+    },
+    {
+      "id": "ingest_aed3444f2b4a0ea7c12b56ad",
+      "scanId": "scan_688169abedd79a212a36ecb9",
+      "organizationId": "ws_1788711772074",
+      "status": "READY_FOR_ANALYSIS",
+      "sourceType": "youtube_url",
+      "sourceDetails": {
+        "youtubeUrl": "https://www.youtube.com/watch?v=lWBj9z2xDDs",
+        "youtubeVideoId": "lWBj9z2xDDs"
+      },
+      "progressPercent": 100,
+      "currentStep": "PreScan analysis completed successfully.",
+      "logs": [
+        {
+          "timestamp": "2026-09-06T16:45:12.688Z",
+          "level": "INFO",
+          "message": "YouTube URL accepted: https://www.youtube.com/watch?v=lWBj9z2xDDs"
+        },
+        {
+          "timestamp": "2026-09-06T16:45:12.688Z",
+          "level": "SUCCESS",
+          "message": "SSRF host verification passed: lWBj9z2xDDs"
+        },
+        {
+          "timestamp": "2026-09-06T16:45:12.720Z",
+          "level": "INFO",
+          "message": "Pipeline execution started (Attempt 1)"
+        },
+        {
+          "timestamp": "2026-09-06T16:45:12.724Z",
+          "level": "INFO",
+          "message": "Starting scan pipeline for \"WEIRDEST INDIAN STREET FOOD 😵 | CARRYMINATI\" (ID: scan_688169abedd79a212a36ecb9)"
+        },
+        {
+          "timestamp": "2026-09-06T16:45:13.078Z",
+          "level": "INFO",
+          "message": "Validating media input parameters and workspace security constraints..."
+        },
+        {
+          "timestamp": "2026-09-06T16:45:13.079Z",
+          "level": "SUCCESS",
+          "message": "YouTube URL and SSRF verification passed (Video ID: lWBj9z2xDDs)"
+        },
+        {
+          "timestamp": "2026-09-06T16:45:13.319Z",
+          "level": "INFO",
+          "message": "Attributed to channel: CarryMinati"
+        },
+        {
+          "timestamp": "2026-09-06T16:45:13.484Z",
+          "level": "INFO",
+          "message": "Querying public metadata for YouTube video lWBj9z2xDDs..."
+        },
+        {
+          "timestamp": "2026-09-06T16:45:13.507Z",
+          "level": "SUCCESS",
+          "message": "Metadata resolved: \"WEIRDEST INDIAN STREET FOOD 😵 | CARRYMINATI\" by CarryMinati"
+        },
+        {
+          "timestamp": "2026-09-06T16:45:13.909Z",
+          "level": "INFO",
+          "message": "Preparing metadata analysis for YouTube video: https://www.youtube.com/watch?v=lWBj9z2xDDs"
+        },
+        {
+          "timestamp": "2026-09-06T16:45:14.223Z",
+          "level": "SUCCESS",
+          "message": "Public YouTube URL prepared for direct Gemini video analysis (https://www.youtube.com/watch?v=lWBj9z2xDDs)"
+        },
+        {
+          "timestamp": "2026-09-06T16:45:14.223Z",
+          "level": "INFO",
+          "message": "Thumbnail asset resolved: https://i.ytimg.com/vi/lWBj9z2xDDs/hqdefault.jpg"
+        },
+        {
+          "timestamp": "2026-09-06T16:45:14.311Z",
+          "level": "INFO",
+          "message": "Verifying audio channels, sample rates, and spoken track integrity..."
+        },
+        {
+          "timestamp": "2026-09-06T16:45:14.764Z",
+          "level": "INFO",
+          "message": "Performing speech-to-text recognition with Gemini AI speech engine..."
+        },
+        {
+          "timestamp": "2026-09-06T16:45:14.766Z",
+          "level": "INFO",
+          "message": "Evaluating profanity, hate speech, advertiser suitability, and copyright rights..."
+        },
+        {
+          "timestamp": "2026-09-06T16:45:15.024Z",
+          "level": "SUCCESS",
+          "message": "Source link verified and cached. Ready for Gemini multi-modal scanning."
+        },
+        {
+          "timestamp": "2026-09-06T16:45:21.443Z",
+          "level": "SUCCESS",
+          "message": "Transcript generated with 2 timestamped segment(s)"
+        },
+        {
+          "timestamp": "2026-09-06T16:45:21.445Z",
+          "level": "INFO",
+          "message": "Validating structured findings, severity weights, and grounding disclaimers..."
+        },
+        {
+          "timestamp": "2026-09-06T16:45:21.446Z",
+          "level": "SUCCESS",
+          "message": "PreScan V1 Report saved (Report ID: report_f79a30a5b1a48ad175d9f516)"
+        },
+        {
+          "timestamp": "2026-09-06T16:45:21.798Z",
+          "level": "SUCCESS",
+          "message": "PreScan completed: Overall Risk LOW, 0 finding(s)."
+        }
+      ],
+      "createdAt": "2026-09-06T16:45:12.688Z",
+      "updatedAt": "2026-09-06T16:45:21.798Z"
+    }
+  ],
+  "videos": [],
+  "analysisJobs": [],
+  "transcripts": [
+    {
+      "id": "tr_cd469d14a3cec6a6fb911b91",
+      "scanId": "scan_bcd84458483b45519e1912cf",
+      "organizationId": "org_1a565fea2e524c7e247407b4",
+      "language": "en",
+      "durationSeconds": 60,
+      "segments": [
+        {
+          "startSeconds": 0,
+          "endSeconds": 19,
+          "text": "All right, so here we are in front of the elephants. And the cool thing about these guys is that they have really, really, really long trunks, and that's that's cool. And that's pretty much all there is to say."
+        }
+      ],
+      "fullText": "All right, so here we are in front of the elephants. And the cool thing about these guys is that they have really, really, really long trunks, and that's that's cool. And that's pretty much all there is to say.",
+      "createdAt": "2026-09-06T16:56:53.836Z"
+    },
+    {
+      "id": "tr_43a91425ce2acf4ab4bff506",
+      "scanId": "scan_688169abedd79a212a36ecb9",
+      "organizationId": "ws_1788711772074",
+      "language": "en",
+      "durationSeconds": 60,
+      "segments": [
+        {
+          "startSeconds": 0,
+          "endSeconds": 5,
+          "text": "Welcome back to the channel. Today we are exploring some of the weirdest Indian street food."
+        },
+        {
+          "startSeconds": 5,
+          "endSeconds": 10,
+          "text": "Let's see what kind of unique flavors we can find on the streets of Delhi."
+        }
+      ],
+      "fullText": "Welcome back to the channel. Today we are exploring some of the weirdest Indian street food. Let's see what kind of unique flavors we can find on the streets of Delhi.",
+      "createdAt": "2026-09-06T16:45:21.442Z"
+    }
+  ],
+  "preScanReports": [
+    {
+      "id": "report_ed03eaa786cb66868e401205",
+      "scanId": "scan_bcd84458483b45519e1912cf",
+      "analysisJobId": "ingest_5b927a543540d447f48f812e",
+      "organizationId": "org_1a565fea2e524c7e247407b4",
+      "createdByUserId": "usr_073660e764efaa2a4e0af63d",
+      "report": {
+        "preScanVersion": "1.0",
+        "metadata": {
+          "scanId": "scan_bcd84458483b45519e1912cf",
+          "title": "Me at the zoo",
+          "category": "entertainment",
+          "language": "en",
+          "analyzedAt": "2026-09-06T16:56:34.264Z"
+        },
+        "overall_risk": {
+          "risk_level": "LOW",
+          "decision": "LOW_RISK",
+          "safety_score": 100,
+          "monetization_impact": "FULLY_MONETIZABLE",
+          "summary": "The video content is benign, consisting of a person speaking about elephants at a zoo. No policy violations or advertiser-suitability concerns were identified."
+        },
+        "categories": {
+          "community_guidelines": {
+            "risk_level": "LOW",
+            "score": 100,
+            "findings_count": 0,
+            "summary": "No community guidelines issues detected."
+          },
+          "advertiser_suitability": {
+            "risk_level": "LOW",
+            "score": 100,
+            "findings_count": 0,
+            "summary": "No advertiser suitability issues detected."
+          },
+          "copyright_signals": {
+            "risk_level": "LOW",
+            "score": 100,
+            "findings_count": 0,
+            "summary": "No copyright signals detected."
+          },
+          "metadata_integrity": {
+            "risk_level": "LOW",
+            "score": 100,
+            "findings_count": 0,
+            "summary": "Metadata aligns with spoken content."
+          },
+          "communityGuidelines": {
+            "risk_level": "LOW",
+            "score": 100,
+            "findings_count": 0,
+            "summary": "No community guidelines issues detected."
+          },
+          "advertiserSuitability": {
+            "risk_level": "LOW",
+            "score": 100,
+            "findings_count": 0,
+            "summary": "No advertiser suitability issues detected."
+          },
+          "copyrightSignals": {
+            "risk_level": "LOW",
+            "score": 100,
+            "findings_count": 0,
+            "summary": "No copyright signals detected."
+          },
+          "metadataIntegrity": {
+            "risk_level": "LOW",
+            "score": 100,
+            "findings_count": 0,
+            "summary": "Metadata aligns with spoken content."
+          }
+        },
+        "findings": [],
+        "positiveObservations": [
+          "Clear audio dialogue",
+          "Compliant title",
+          "Content is family-friendly"
+        ],
+        "creatorActionPlan": [
+          "No action required; video appears compliant with YouTube policies."
+        ],
+        "recommendedActions": [],
+        "limitations": [
+          "Visual content was not analyzed — PreScan Phase 05 evaluates spoken audio dialogue and video metadata only."
+        ],
+        "disclaimer": "PreScan is an advisory pre-upload QA tool. Final policy decisions rest entirely with YouTube automated systems and review teams.",
+        "overall": {
+          "risk_level": "LOW",
+          "decision": "LOW_RISK",
+          "safety_score": 100,
+          "monetization_impact": "FULLY_MONETIZABLE",
+          "summary": "The video content is benign, consisting of a person speaking about elephants at a zoo. No policy violations or advertiser-suitability concerns were identified."
+        }
+      },
+      "createdAt": "2026-09-06T16:56:53.841Z",
+      "updatedAt": "2026-09-06T16:56:53.841Z"
+    },
+    {
+      "id": "report_f79a30a5b1a48ad175d9f516",
+      "scanId": "scan_688169abedd79a212a36ecb9",
+      "analysisJobId": "ingest_aed3444f2b4a0ea7c12b56ad",
+      "organizationId": "ws_1788711772074",
+      "createdByUserId": "usr_creator_demo_prescan_local",
+      "report": {
+        "preScanVersion": "1.0",
+        "metadata": {
+          "scanId": "scan_688169abedd79a212a36ecb9",
+          "title": "WEIRDEST INDIAN STREET FOOD 😵 | CARRYMINATI",
+          "category": "entertainment",
+          "language": "en",
+          "analyzedAt": "2026-09-06T16:45:14.766Z"
+        },
+        "overall_risk": {
+          "risk_level": "LOW",
+          "decision": "LOW_RISK",
+          "safety_score": 95,
+          "monetization_impact": "FULLY_MONETIZABLE",
+          "summary": "The video content is clean, professional, and aligns with the provided metadata. No policy violations were detected in the audio track."
+        },
+        "categories": {
+          "community_guidelines": {
+            "risk_level": "LOW",
+            "score": 100,
+            "findings_count": 0,
+            "summary": "No community guidelines issues detected."
+          },
+          "advertiser_suitability": {
+            "risk_level": "LOW",
+            "score": 100,
+            "findings_count": 0,
+            "summary": "No advertiser suitability issues detected."
+          },
+          "copyright_signals": {
+            "risk_level": "LOW",
+            "score": 100,
+            "findings_count": 0,
+            "summary": "No copyright signals detected."
+          },
+          "metadata_integrity": {
+            "risk_level": "LOW",
+            "score": 100,
+            "findings_count": 0,
+            "summary": "Metadata aligns with spoken content."
+          },
+          "communityGuidelines": {
+            "risk_level": "LOW",
+            "score": 100,
+            "findings_count": 0,
+            "summary": "No community guidelines issues detected."
+          },
+          "advertiserSuitability": {
+            "risk_level": "LOW",
+            "score": 100,
+            "findings_count": 0,
+            "summary": "No advertiser suitability issues detected."
+          },
+          "copyrightSignals": {
+            "risk_level": "LOW",
+            "score": 100,
+            "findings_count": 0,
+            "summary": "No copyright signals detected."
+          },
+          "metadataIntegrity": {
+            "risk_level": "LOW",
+            "score": 100,
+            "findings_count": 0,
+            "summary": "Metadata aligns with spoken content."
+          }
+        },
+        "findings": [],
+        "positiveObservations": [
+          "Clear audio dialogue",
+          "Compliant title",
+          "No profanity detected"
+        ],
+        "creatorActionPlan": [
+          "Review video before publishing"
+        ],
+        "recommendedActions": [],
+        "limitations": [
+          "Visual content was not analyzed — PreScan Phase 05 evaluates spoken audio dialogue and video metadata only."
+        ],
+        "disclaimer": "PreScan is an advisory pre-upload QA tool. Final policy decisions rest entirely with YouTube automated systems and review teams.",
+        "overall": {
+          "risk_level": "LOW",
+          "decision": "LOW_RISK",
+          "safety_score": 95,
+          "monetization_impact": "FULLY_MONETIZABLE",
+          "summary": "The video content is clean, professional, and aligns with the provided metadata. No policy violations were detected in the audio track."
+        }
+      },
+      "createdAt": "2026-09-06T16:45:21.446Z",
+      "updatedAt": "2026-09-06T16:45:21.446Z"
+    }
+  ],
+  "findingReviews": [],
+  "plans": [
+    {
+      "id": "plan_free",
+      "key": "FREE",
+      "name": "Free",
+      "description": "For creators exploring pre-upload risk detection and testing short content.",
+      "monthlyPrice": 0,
+      "currency": "USD",
+      "scanLimit": 5,
+      "maxVideoDurationSeconds": 600,
+      "maxMembers": 3,
+      "features": [
+        "basic_analysis",
+        "basic_reports",
+        "scan_history"
+      ],
+      "isActive": true,
+      "displayOrder": 1,
+      "createdAt": "2026-09-02T11:16:45.718Z",
+      "updatedAt": "2026-09-06T16:55:47.561Z"
+    },
+    {
+      "id": "plan_pro",
+      "key": "PRO",
+      "name": "Pro",
+      "description": "For active creators publishing regular high-risk or monetized content.",
+      "monthlyPrice": 19,
+      "currency": "USD",
+      "scanLimit": 100,
+      "maxVideoDurationSeconds": 3600,
+      "maxMembers": 10,
+      "features": [
+        "basic_analysis",
+        "full_analysis",
+        "basic_reports",
+        "full_reports",
+        "scan_history",
+        "team_collaboration",
+        "priority_processing"
+      ],
+      "isActive": true,
+      "displayOrder": 2,
+      "badge": "MOST POPULAR",
+      "isPopular": true,
+      "createdAt": "2026-09-02T11:16:45.718Z",
+      "updatedAt": "2026-09-06T16:55:47.561Z"
+    },
+    {
+      "id": "plan_business",
+      "key": "BUSINESS",
+      "name": "Business",
+      "description": "For studios, agencies, and high-volume media production teams.",
+      "monthlyPrice": 49,
+      "currency": "USD",
+      "scanLimit": 500,
+      "maxVideoDurationSeconds": 10800,
+      "maxMembers": 25,
+      "features": [
+        "basic_analysis",
+        "full_analysis",
+        "basic_reports",
+        "full_reports",
+        "scan_history",
+        "team_collaboration",
+        "priority_processing",
+        "advanced_analytics"
+      ],
+      "isActive": true,
+      "displayOrder": 3,
+      "createdAt": "2026-09-02T11:16:45.718Z",
+      "updatedAt": "2026-09-06T16:55:47.561Z"
+    }
+  ],
+  "subscriptions": [
+    {
+      "id": "sub_org_c34e387a5ab77a7bdf458e53",
+      "workspaceId": "org_c34e387a5ab77a7bdf458e53",
+      "planId": "plan_free",
+      "planKey": "FREE",
+      "status": "ACTIVE",
+      "billingProvider": "NONE",
+      "currentPeriodStart": "2026-09-01T00:00:00.000Z",
+      "currentPeriodEnd": "2026-09-30T23:59:59.999Z",
+      "cancelAtPeriodEnd": false,
+      "createdAt": "2026-08-31T07:51:31.480Z",
+      "updatedAt": "2026-09-02T11:16:45.718Z"
+    },
+    {
+      "id": "sub_org_1788347805718_h4ihs",
+      "workspaceId": "org_1788347805718_h4ihs",
+      "planId": "plan_free",
+      "planKey": "FREE",
+      "status": "ACTIVE",
+      "billingProvider": "NONE",
+      "currentPeriodStart": "2026-09-01T00:00:00.000Z",
+      "currentPeriodEnd": "2026-09-30T23:59:59.999Z",
+      "cancelAtPeriodEnd": false,
+      "createdAt": "2026-09-02T11:16:45.718Z",
+      "updatedAt": "2026-09-02T11:16:45.718Z"
+    },
+    {
+      "id": "sub_org_1788347805718_o1898",
+      "workspaceId": "org_1788347805718_o1898",
+      "planId": "plan_free",
+      "planKey": "FREE",
+      "status": "ACTIVE",
+      "billingProvider": "NONE",
+      "currentPeriodStart": "2026-09-01T00:00:00.000Z",
+      "currentPeriodEnd": "2026-09-30T23:59:59.999Z",
+      "cancelAtPeriodEnd": false,
+      "createdAt": "2026-09-02T11:16:45.718Z",
+      "updatedAt": "2026-09-02T11:16:45.718Z"
+    },
+    {
+      "id": "sub_org_1788422294751_i7vqn",
+      "workspaceId": "org_1788422294751_i7vqn",
+      "planId": "plan_free",
+      "planKey": "FREE",
+      "status": "ACTIVE",
+      "billingProvider": "NONE",
+      "currentPeriodStart": "2026-09-01T00:00:00.000Z",
+      "currentPeriodEnd": "2026-09-30T23:59:59.999Z",
+      "cancelAtPeriodEnd": false,
+      "createdAt": "2026-09-03T07:58:14.751Z",
+      "updatedAt": "2026-09-03T07:58:14.752Z"
+    },
+    {
+      "id": "sub_org_1788422304649_bttqj",
+      "workspaceId": "org_1788422304649_bttqj",
+      "planId": "plan_free",
+      "planKey": "FREE",
+      "status": "ACTIVE",
+      "billingProvider": "NONE",
+      "currentPeriodStart": "2026-09-01T00:00:00.000Z",
+      "currentPeriodEnd": "2026-09-30T23:59:59.999Z",
+      "cancelAtPeriodEnd": false,
+      "createdAt": "2026-09-03T07:58:24.649Z",
+      "updatedAt": "2026-09-03T07:58:24.650Z"
+    },
+    {
+      "id": "sub_org_67eb416ebe822548a617bfe1",
+      "workspaceId": "org_67eb416ebe822548a617bfe1",
+      "planId": "plan_free",
+      "planKey": "FREE",
+      "status": "ACTIVE",
+      "billingProvider": "NONE",
+      "currentPeriodStart": "2026-09-01T00:00:00.000Z",
+      "currentPeriodEnd": "2026-09-30T23:59:59.999Z",
+      "cancelAtPeriodEnd": false,
+      "createdAt": "2026-09-03T08:06:20.365Z",
+      "updatedAt": "2026-09-03T08:18:50.285Z"
+    },
+    {
+      "id": "sub_org_demo_workspace",
+      "workspaceId": "org_demo_workspace",
+      "planId": "plan_free",
+      "planKey": "FREE",
+      "status": "ACTIVE",
+      "billingProvider": "NONE",
+      "currentPeriodStart": "2026-09-01T00:00:00.000Z",
+      "currentPeriodEnd": "2026-09-30T23:59:59.999Z",
+      "cancelAtPeriodEnd": false,
+      "createdAt": "2026-09-03T08:20:05.382Z",
+      "updatedAt": "2026-09-03T08:20:05.383Z"
+    },
+    {
+      "id": "sub_org_1788423605383_m8796",
+      "workspaceId": "org_1788423605383_m8796",
+      "planId": "plan_free",
+      "planKey": "FREE",
+      "status": "ACTIVE",
+      "billingProvider": "NONE",
+      "currentPeriodStart": "2026-09-01T00:00:00.000Z",
+      "currentPeriodEnd": "2026-09-30T23:59:59.999Z",
+      "cancelAtPeriodEnd": false,
+      "createdAt": "2026-09-03T08:20:05.383Z",
+      "updatedAt": "2026-09-03T08:20:05.383Z"
+    },
+    {
+      "id": "sub_ws_usr_test_example_com",
+      "workspaceId": "ws_usr_test_example_com",
+      "planId": "plan_free",
+      "planKey": "FREE",
+      "status": "ACTIVE",
+      "billingProvider": "NONE",
+      "currentPeriodStart": "2026-09-01T00:00:00.000Z",
+      "currentPeriodEnd": "2026-09-30T23:59:59.999Z",
+      "cancelAtPeriodEnd": false,
+      "createdAt": "2026-09-06T16:35:27.424Z",
+      "updatedAt": "2026-09-06T16:35:50.918Z"
+    },
+    {
+      "id": "sub_ws_1788711772074",
+      "workspaceId": "ws_1788711772074",
+      "planId": "plan_free",
+      "planKey": "FREE",
+      "status": "ACTIVE",
+      "billingProvider": "NONE",
+      "currentPeriodStart": "2026-09-01T00:00:00.000Z",
+      "currentPeriodEnd": "2026-09-30T23:59:59.999Z",
+      "cancelAtPeriodEnd": false,
+      "createdAt": "2026-09-06T16:36:24.654Z",
+      "updatedAt": "2026-09-06T16:36:24.654Z"
+    },
+    {
+      "id": "sub_org_1a565fea2e524c7e247407b4",
+      "workspaceId": "org_1a565fea2e524c7e247407b4",
+      "planId": "plan_free",
+      "planKey": "FREE",
+      "status": "ACTIVE",
+      "billingProvider": "NONE",
+      "currentPeriodStart": "2026-09-01T00:00:00.000Z",
+      "currentPeriodEnd": "2026-09-30T23:59:59.999Z",
+      "cancelAtPeriodEnd": false,
+      "createdAt": "2026-09-06T16:56:32.158Z",
+      "updatedAt": "2026-09-06T16:56:32.158Z"
+    }
+  ],
+  "usageRecords": [
+    {
+      "id": "usage_org_c34e387a5ab77a7bdf458e53_2026_9",
+      "workspaceId": "org_c34e387a5ab77a7bdf458e53",
+      "periodStart": "2026-09-01T00:00:00.000Z",
+      "periodEnd": "2026-09-30T23:59:59.999Z",
+      "scansUsed": 0,
+      "createdAt": "2026-09-02T11:16:45.718Z",
+      "updatedAt": "2026-09-02T11:16:45.718Z"
+    },
+    {
+      "id": "usage_org_1788347805718_h4ihs_2026_9",
+      "workspaceId": "org_1788347805718_h4ihs",
+      "periodStart": "2026-09-01T00:00:00.000Z",
+      "periodEnd": "2026-09-30T23:59:59.999Z",
+      "scansUsed": 0,
+      "createdAt": "2026-09-02T11:16:45.718Z",
+      "updatedAt": "2026-09-02T11:16:45.718Z"
+    },
+    {
+      "id": "usage_org_1788347805718_o1898_2026_9",
+      "workspaceId": "org_1788347805718_o1898",
+      "periodStart": "2026-09-01T00:00:00.000Z",
+      "periodEnd": "2026-09-30T23:59:59.999Z",
+      "scansUsed": 0,
+      "createdAt": "2026-09-02T11:16:45.718Z",
+      "updatedAt": "2026-09-02T11:16:45.718Z"
+    },
+    {
+      "id": "usage_org_1788422294751_i7vqn_2026_9",
+      "workspaceId": "org_1788422294751_i7vqn",
+      "periodStart": "2026-09-01T00:00:00.000Z",
+      "periodEnd": "2026-09-30T23:59:59.999Z",
+      "scansUsed": 0,
+      "createdAt": "2026-09-03T07:58:14.752Z",
+      "updatedAt": "2026-09-03T07:58:14.752Z"
+    },
+    {
+      "id": "usage_org_1788422304649_bttqj_2026_9",
+      "workspaceId": "org_1788422304649_bttqj",
+      "periodStart": "2026-09-01T00:00:00.000Z",
+      "periodEnd": "2026-09-30T23:59:59.999Z",
+      "scansUsed": 0,
+      "createdAt": "2026-09-03T07:58:24.650Z",
+      "updatedAt": "2026-09-03T07:58:24.650Z"
+    },
+    {
+      "id": "usage_org_67eb416ebe822548a617bfe1_2026_9",
+      "workspaceId": "org_67eb416ebe822548a617bfe1",
+      "periodStart": "2026-09-01T00:00:00.000Z",
+      "periodEnd": "2026-09-30T23:59:59.999Z",
+      "scansUsed": 0,
+      "createdAt": "2026-09-03T08:18:50.285Z",
+      "updatedAt": "2026-09-03T08:18:50.285Z"
+    },
+    {
+      "id": "usage_org_demo_workspace_2026_9",
+      "workspaceId": "org_demo_workspace",
+      "periodStart": "2026-09-01T00:00:00.000Z",
+      "periodEnd": "2026-09-30T23:59:59.999Z",
+      "scansUsed": 0,
+      "createdAt": "2026-09-03T08:20:05.383Z",
+      "updatedAt": "2026-09-03T08:20:05.383Z"
+    },
+    {
+      "id": "usage_org_1788423605383_m8796_2026_9",
+      "workspaceId": "org_1788423605383_m8796",
+      "periodStart": "2026-09-01T00:00:00.000Z",
+      "periodEnd": "2026-09-30T23:59:59.999Z",
+      "scansUsed": 0,
+      "createdAt": "2026-09-03T08:20:05.383Z",
+      "updatedAt": "2026-09-03T08:20:05.383Z"
+    },
+    {
+      "id": "usage_ws_usr_test_example_com_2026_9",
+      "workspaceId": "ws_usr_test_example_com",
+      "periodStart": "2026-09-01T00:00:00.000Z",
+      "periodEnd": "2026-09-30T23:59:59.999Z",
+      "scansUsed": 0,
+      "createdAt": "2026-09-06T16:35:50.918Z",
+      "updatedAt": "2026-09-06T16:35:50.918Z"
+    },
+    {
+      "id": "usage_ws_1788711772074_1788712584654",
+      "workspaceId": "ws_1788711772074",
+      "periodStart": "2026-09-01T00:00:00.000Z",
+      "periodEnd": "2026-09-30T23:59:59.999Z",
+      "scansUsed": 1,
+      "createdAt": "2026-09-06T16:36:24.654Z",
+      "updatedAt": "2026-09-06T16:45:12.718Z"
+    },
+    {
+      "id": "usage_org_1a565fea2e524c7e247407b4_1788713792159",
+      "workspaceId": "org_1a565fea2e524c7e247407b4",
+      "periodStart": "2026-09-01T00:00:00.000Z",
+      "periodEnd": "2026-09-30T23:59:59.999Z",
+      "scansUsed": 1,
+      "createdAt": "2026-09-06T16:56:32.159Z",
+      "updatedAt": "2026-09-06T16:56:32.220Z"
+    }
+  ],
+  "usageEvents": [
+    {
+      "id": "usevt_1788713792221_nqfkd",
+      "workspaceId": "org_1a565fea2e524c7e247407b4",
+      "userId": "usr_073660e764efaa2a4e0af63d",
+      "scanId": "scan_bcd84458483b45519e1912cf",
+      "type": "SCAN_CONSUMED",
+      "units": 1,
+      "metadataJson": "{\"planKey\":\"FREE\",\"scansUsedAfter\":1,\"scanLimit\":5}",
+      "createdAt": "2026-09-06T16:56:32.220Z"
+    },
+    {
+      "id": "usevt_1788713112719_60lqi",
+      "workspaceId": "ws_1788711772074",
+      "userId": "usr_creator_demo_prescan_local",
+      "scanId": "scan_688169abedd79a212a36ecb9",
+      "type": "SCAN_CONSUMED",
+      "units": 1,
+      "metadataJson": "{\"planKey\":\"FREE\",\"scansUsedAfter\":1,\"scanLimit\":5}",
+      "createdAt": "2026-09-06T16:45:12.718Z"
+    }
+  ],
+  "invoices": [],
+  "processedStripeEvents": []
+}
