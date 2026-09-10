@@ -22,8 +22,6 @@ import { EmptyState } from '../components/ui/EmptyState';
 import { Breadcrumb } from '../components/ui/Breadcrumb';
 import { Badge } from '../components/ui/Badge';
 import { ScanService } from '../services/scan.service';
-import { SupabaseDataService } from '../services/supabaseData.service';
-import { StorageService } from '../services/storage.service';
 import { Scan } from '../types/models';
 import { ScanStatus } from '../types/enums';
 import { ROUTES } from '../router/routes';
@@ -44,35 +42,12 @@ export const ScansPage: React.FC<ScansPageProps> = ({ onNavigate }) => {
   const fetchScans = useCallback(async () => {
     setIsLoading(true);
     try {
-      const supabaseScans = await SupabaseDataService.getScans();
-      let apiScans: Scan[] = [];
-      try {
-        const res = await ScanService.listScans({
-          organizationId: organization?.id,
-          search: searchQuery || undefined,
-          status: statusFilter === 'ALL' ? undefined : statusFilter,
-        });
-        apiScans = res.scans || [];
-      } catch {
-        // Fallback to Supabase scans
-      }
-
-      const combinedMap = new Map<string, Scan>();
-      [...supabaseScans, ...apiScans].forEach((s) => {
-        if (!combinedMap.has(s.id)) {
-          combinedMap.set(s.id, s);
-        }
+      const res = await ScanService.listScans({
+        organizationId: organization?.id,
+        search: searchQuery || undefined,
+        status: statusFilter === 'ALL' ? undefined : statusFilter,
       });
-
-      let allList = Array.from(combinedMap.values());
-      if (searchQuery) {
-        allList = allList.filter((s) => s.title.toLowerCase().includes(searchQuery.toLowerCase()));
-      }
-      if (statusFilter && statusFilter !== 'ALL') {
-        allList = allList.filter((s) => s.status === statusFilter);
-      }
-
-      setScans(allList);
+      setScans(res.scans || []);
     } catch (err) {
       console.error('Failed to load scans:', err);
     } finally {
@@ -107,12 +82,7 @@ export const ScansPage: React.FC<ScansPageProps> = ({ onNavigate }) => {
     if (!window.confirm('Are you sure you want to delete this scan record?')) return;
     setDeletingId(scanId);
     try {
-      const targetScan = scans.find((s) => s.id === scanId);
-      if (targetScan?.mediaInfo?.storagePath) {
-        await StorageService.deleteFile(targetScan.mediaInfo.storagePath).catch(() => {});
-      }
-      await SupabaseDataService.deleteScan(scanId).catch(() => {});
-      await ScanService.deleteScan(scanId).catch(() => {});
+      await ScanService.deleteScan(scanId);
       setScans((prev) => prev.filter((s) => s.id !== scanId));
     } catch (err: any) {
       alert(err?.message || 'Failed to delete scan.');

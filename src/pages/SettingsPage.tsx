@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Settings, Shield, Building2, Save, User as UserIcon, Lock, CheckCircle2, AlertTriangle, Key, Upload, Trash2, Camera, Loader2 } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Settings, Shield, Building2, Save, User as UserIcon, Lock, CheckCircle2, AlertTriangle, Key } from 'lucide-react';
 import { PageHeader } from '../components/ui/PageHeader';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
@@ -9,7 +9,6 @@ import { Breadcrumb } from '../components/ui/Breadcrumb';
 import { Alert } from '../components/ui/Alert';
 import { useToast } from '../components/ui/Toast';
 import { useAuth } from '../context/AuthContext';
-import { StorageService } from '../services/storage.service';
 import { apiFetch } from '../lib/api';
 
 interface SettingsPageProps {
@@ -23,68 +22,6 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ onNavigate }) => {
   // Profile Form State
   const [displayName, setDisplayName] = useState(user?.displayName || user?.fullName || '');
   const [savingProfile, setSavingProfile] = useState(false);
-
-  // Profile Avatar State
-  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
-  const [avatarPath, setAvatarPath] = useState<string | null>(null);
-  const [uploadingAvatar, setUploadingAvatar] = useState(false);
-  const avatarInputRef = useRef<HTMLInputElement>(null);
-
-  const handleAvatarSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    if (!file.type.startsWith('image/')) {
-      toast({ type: 'error', title: 'Invalid File', description: 'Please select an image file (PNG, JPG, WebP).' });
-      return;
-    }
-
-    try {
-      setUploadingAvatar(true);
-      // Upload avatar to private Supabase Storage bucket "app-files"
-      // Path: ${auth.uid()}/avatars/profile/${uuid}.${extension}
-      const res = await StorageService.uploadFile(file, 'avatars', 'profile');
-      setAvatarPath(res.path);
-      setAvatarUrl(res.signedUrl);
-      toast({
-        type: 'success',
-        title: 'Avatar Uploaded',
-        description: 'Profile image uploaded securely to Supabase Storage.',
-      });
-    } catch (err: any) {
-      toast({
-        type: 'error',
-        title: 'Upload Failed',
-        description: err?.message || 'Failed to upload profile image.',
-      });
-    } finally {
-      setUploadingAvatar(false);
-      if (avatarInputRef.current) avatarInputRef.current.value = '';
-    }
-  };
-
-  const handleDeleteAvatar = async () => {
-    if (!avatarPath) return;
-    try {
-      setUploadingAvatar(true);
-      await StorageService.deleteFile(avatarPath);
-      setAvatarPath(null);
-      setAvatarUrl(null);
-      toast({
-        type: 'success',
-        title: 'Avatar Removed',
-        description: 'Profile image deleted from Supabase Storage.',
-      });
-    } catch (err: any) {
-      toast({
-        type: 'error',
-        title: 'Delete Failed',
-        description: err?.message || 'Failed to remove avatar from storage.',
-      });
-    } finally {
-      setUploadingAvatar(false);
-    }
-  };
 
   // Organization Form State
   const [orgName, setOrgName] = useState(organization?.name || 'Main Workspace');
@@ -231,70 +168,6 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ onNavigate }) => {
             </CardHeader>
 
             <CardContent className="space-y-4">
-              {/* Profile Avatar Upload */}
-              <div className="space-y-1.5 pb-2 border-b border-neutral-100">
-                <label className="block text-xs font-medium text-neutral-700">
-                  Profile Avatar (Supabase Storage)
-                </label>
-                <div className="flex items-center gap-4">
-                  <div className="relative w-14 h-14 rounded-full bg-neutral-100 border border-neutral-200 flex items-center justify-center overflow-hidden shrink-0 shadow-2xs">
-                    {avatarUrl ? (
-                      <img
-                        src={avatarUrl}
-                        alt="Avatar"
-                        className="w-full h-full object-cover"
-                        referrerPolicy="no-referrer"
-                      />
-                    ) : (
-                      <UserIcon className="w-6 h-6 text-neutral-400" />
-                    )}
-                    {uploadingAvatar && (
-                      <div className="absolute inset-0 bg-black/50 flex items-center justify-center text-white">
-                        <Loader2 className="w-5 h-5 animate-spin" />
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="space-y-1.5">
-                    <input
-                      ref={avatarInputRef}
-                      type="file"
-                      accept="image/*"
-                      onChange={handleAvatarSelect}
-                      className="hidden"
-                    />
-                    <div className="flex items-center gap-2">
-                      <Button
-                        type="button"
-                        variant="outline"
-                        size="sm"
-                        leftIcon={<Upload className="w-3.5 h-3.5" />}
-                        onClick={() => avatarInputRef.current?.click()}
-                        disabled={uploadingAvatar}
-                      >
-                        Upload Photo
-                      </Button>
-                      {avatarPath && (
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="sm"
-                          className="text-red-600 hover:text-red-700 hover:bg-red-50"
-                          leftIcon={<Trash2 className="w-3.5 h-3.5" />}
-                          onClick={handleDeleteAvatar}
-                          disabled={uploadingAvatar}
-                        >
-                          Remove
-                        </Button>
-                      )}
-                    </div>
-                    <p className="text-[11px] text-neutral-400 font-mono">
-                      Private storage path: {user?.id ? `${user.id.slice(0, 8)}.../avatars/` : 'app-files'}
-                    </p>
-                  </div>
-                </div>
-              </div>
-
               <Input
                 label="Full Display Name"
                 value={displayName}

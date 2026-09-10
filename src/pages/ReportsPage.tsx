@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FileCheck2, Plus, Search, ArrowRight, RefreshCw } from 'lucide-react';
+import { FileCheck2, Plus, Search, ShieldAlert, ShieldCheck, AlertTriangle, ArrowRight, RefreshCw } from 'lucide-react';
 import { PageHeader } from '../components/ui/PageHeader';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
@@ -8,8 +8,8 @@ import { Breadcrumb } from '../components/ui/Breadcrumb';
 import { Badge } from '../components/ui/Badge';
 import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/Card';
 import { ScanService } from '../services/scan.service';
-import { SupabaseDataService } from '../services/supabaseData.service';
 import { Scan } from '../types/models';
+import { ScanStatus } from '../types/enums';
 
 interface ReportsPageProps {
   onNavigate: (route: string) => void;
@@ -24,24 +24,8 @@ export const ReportsPage: React.FC<ReportsPageProps> = ({ onNavigate }) => {
     async function loadReports() {
       try {
         setIsLoading(true);
-        // Try fetching Supabase scans first
-        const supabaseScans = await SupabaseDataService.getScans();
-        let apiScans: Scan[] = [];
-        try {
-          const res = await ScanService.listScans({ limit: 50 });
-          apiScans = res.scans || [];
-        } catch {
-          // If backend API fails, rely on Supabase scans
-        }
-
-        const combinedMap = new Map<string, Scan>();
-        [...supabaseScans, ...apiScans].forEach((s) => {
-          if (!combinedMap.has(s.id)) {
-            combinedMap.set(s.id, s);
-          }
-        });
-
-        setScans(Array.from(combinedMap.values()));
+        const res = await ScanService.listScans({ limit: 50 });
+        setScans(res.scans);
       } catch (err) {
         console.error('Failed to load reports:', err);
       } finally {
@@ -111,7 +95,7 @@ export const ReportsPage: React.FC<ReportsPageProps> = ({ onNavigate }) => {
       {isLoading ? (
         <div className="py-20 flex flex-col items-center justify-center space-y-3">
           <RefreshCw className="w-6 h-6 text-neutral-400 animate-spin" />
-          <p className="text-xs text-neutral-500 font-mono">Loading reports from Supabase...</p>
+          <p className="text-xs text-neutral-500 font-mono">Loading reports...</p>
         </div>
       ) : reportScans.length === 0 ? (
         <div className="py-12">
@@ -148,9 +132,7 @@ export const ReportsPage: React.FC<ReportsPageProps> = ({ onNavigate }) => {
               </CardHeader>
               <CardContent className="space-y-3 pt-0">
                 <div className="flex items-center justify-between text-xs pt-2 border-t border-neutral-100">
-                  <span className="text-neutral-500 capitalize">
-                    {scan.sourceType?.replace('_', ' ') || 'Scan'}
-                  </span>
+                  <span className="text-neutral-500 capitalize">{scan.sourceType.replace('_', ' ')}</span>
                   <span className="inline-flex items-center gap-1 font-semibold text-neutral-800 group-hover:translate-x-0.5 transition-transform">
                     <span>View Audit</span>
                     <ArrowRight className="w-3.5 h-3.5 text-neutral-500" />

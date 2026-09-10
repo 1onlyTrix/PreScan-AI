@@ -32,8 +32,6 @@ import { Badge } from '../components/ui/Badge';
 import { Alert } from '../components/ui/Alert';
 import { Breadcrumb } from '../components/ui/Breadcrumb';
 import { ScanService } from '../services/scan.service';
-import { SupabaseDataService } from '../services/supabaseData.service';
-import { StorageService } from '../services/storage.service';
 import { Scan, IngestionJob } from '../types/models';
 import { ScanStatus } from '../types/enums';
 import { PreScanReportView } from '../components/PreScanReportView';
@@ -78,20 +76,8 @@ export const ScanDetailPage: React.FC<ScanDetailPageProps> = ({ scanId, onNaviga
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [showTechnicalLogs, setShowTechnicalLogs] = useState(false);
   const [copiedCode, setCopiedCode] = useState(false);
-  const [signedMediaUrl, setSignedMediaUrl] = useState<string | null>(null);
 
   const terminalEndRef = useRef<HTMLDivElement>(null);
-
-  // Generate signed URL for private Supabase Storage app-files bucket
-  useEffect(() => {
-    if (scan?.mediaInfo?.storagePath) {
-      StorageService.getSignedUrl(scan.mediaInfo.storagePath).then((url) => {
-        if (url) setSignedMediaUrl(url);
-      });
-    } else if (scan?.mediaInfo?.signedUrl) {
-      setSignedMediaUrl(scan.mediaInfo.signedUrl);
-    }
-  }, [scan?.mediaInfo?.storagePath, scan?.mediaInfo?.signedUrl]);
 
   // Fetch report data if scan completed
   const fetchReport = useCallback(async () => {
@@ -248,11 +234,7 @@ export const ScanDetailPage: React.FC<ScanDetailPageProps> = ({ scanId, onNaviga
   const handleDeleteScan = async () => {
     setIsDeleting(true);
     try {
-      if (scan?.mediaInfo?.storagePath) {
-        await StorageService.deleteFile(scan.mediaInfo.storagePath).catch(() => {});
-      }
-      await SupabaseDataService.deleteScan(scanId).catch(() => {});
-      await ScanService.deleteScan(scanId).catch(() => {});
+      await ScanService.deleteScan(scanId);
       onNavigate(ROUTES.SCANS);
     } catch (err: any) {
       alert(err?.message || 'Failed to delete scan.');
@@ -727,34 +709,18 @@ export const ScanDetailPage: React.FC<ScanDetailPageProps> = ({ scanId, onNaviga
                       </div>
                     </div>
                   ) : (
-                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 rounded-xl border border-neutral-200 bg-neutral-50/50">
-                      <div className="flex items-center gap-4 overflow-hidden flex-1">
-                        <div className="w-12 h-12 rounded-xl bg-white border border-neutral-200 flex items-center justify-center text-neutral-800 shadow-2xs shrink-0">
-                          <FileVideo className="w-6 h-6" />
-                        </div>
-                        <div className="space-y-1 overflow-hidden">
-                          <h4 className="text-xs font-bold text-neutral-900 truncate">
-                            {scan.mediaInfo?.fileName || scan.title}
-                          </h4>
-                          <p className="text-[11px] text-neutral-500 font-mono">
-                            {scan.mediaInfo?.fileSizeBytes
-                              ? `${(scan.mediaInfo.fileSizeBytes / (1024 * 1024)).toFixed(2)} MB · `
-                              : ''}
-                            Bucket: app-files (Private)
-                          </p>
-                        </div>
+                    <div className="flex items-center gap-4 p-4 rounded-xl border border-neutral-200 bg-neutral-50/50">
+                      <div className="w-12 h-12 rounded-xl bg-white border border-neutral-200 flex items-center justify-center text-neutral-800 shadow-2xs shrink-0">
+                        <FileVideo className="w-6 h-6" />
                       </div>
-                      {(signedMediaUrl || scan.mediaInfo?.signedUrl) && (
-                        <a
-                          href={signedMediaUrl || scan.mediaInfo?.signedUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg bg-neutral-900 text-white hover:bg-neutral-800 transition-colors shrink-0"
-                        >
-                          <ExternalLink className="w-3.5 h-3.5" />
-                          <span>Access Stored File</span>
-                        </a>
-                      )}
+                      <div className="space-y-1 flex-1 overflow-hidden">
+                        <h4 className="text-xs font-bold text-neutral-900 truncate">
+                          {scan.mediaInfo?.fileName || scan.title}
+                        </h4>
+                        <p className="text-[11px] text-neutral-500">
+                          Format: {scan.mediaInfo?.format || 'Direct Media Upload'}
+                        </p>
+                      </div>
                     </div>
                   )}
                 </CardContent>

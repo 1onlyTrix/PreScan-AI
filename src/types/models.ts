@@ -191,7 +191,6 @@ export interface MediaInfo {
   channelTitle?: string;
   resolution?: string;
   storagePath?: string;
-  signedUrl?: string;
   format?: string;
   checksum?: string;
 }
