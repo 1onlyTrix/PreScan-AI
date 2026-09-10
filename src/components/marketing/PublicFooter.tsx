@@ -55,14 +55,6 @@ export const PublicFooter: React.FC<PublicFooterProps> = ({ onNavigate }) => {
                   How it works
                 </button>
               </li>
-              <li>
-                <button
-                  onClick={() => onNavigate(ROUTES.PRICING)}
-                  className="hover:text-neutral-900 transition-colors"
-                >
-                  Pricing
-                </button>
-              </li>
             </ul>
           </div>
 

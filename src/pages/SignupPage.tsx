@@ -6,13 +6,14 @@ import { Card, CardContent, CardFooter } from '../components/ui/Card';
 import { Alert } from '../components/ui/Alert';
 import { useAuth } from '../context/AuthContext';
 import { ROUTES } from '../router/routes';
+import { supabase, signInWithGoogle } from '../supabaseClient';
 
 interface SignupPageProps {
   onNavigate: (route: string) => void;
 }
 
 export const SignupPage: React.FC<SignupPageProps> = ({ onNavigate }) => {
-  const { signup, loginWithGoogle } = useAuth();
+  const { loginWithGoogle } = useAuth();
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -27,8 +28,10 @@ export const SignupPage: React.FC<SignupPageProps> = ({ onNavigate }) => {
     try {
       setGoogleLoading(true);
       setError(null);
-      await loginWithGoogle();
-      onNavigate(ROUTES.ONBOARDING);
+      const { error: supabaseError } = await signInWithGoogle();
+      if (supabaseError) {
+        setError(supabaseError.message);
+      }
     } catch (err: any) {
       setError(err.message || 'Unable to sign up with Google. Please try again.');
     } finally {
@@ -73,17 +76,18 @@ export const SignupPage: React.FC<SignupPageProps> = ({ onNavigate }) => {
       setLoading(true);
       setError(null);
 
-      const computedName = fullName.trim() || email.trim().split('@')[0] || 'Demo Creator';
-
-      await signup({
-        fullName: computedName,
+      const { error: supabaseError } = await supabase.auth.signUp({
         email: email.trim(),
         password,
-        termsAccepted: true,
       });
 
-      // Newly registered users ALWAYS go to existing Onboarding Questions page
-      onNavigate(ROUTES.ONBOARDING);
+      if (supabaseError) {
+        setError(supabaseError.message);
+        return;
+      }
+
+      const targetEmail = encodeURIComponent(email.trim());
+      onNavigate(`${ROUTES.LOGIN}?registered=true&email=${targetEmail}`);
     } catch (err: any) {
       setError(err.message || 'Failed to create your account.');
     } finally {

@@ -11,7 +11,6 @@ import { ReportsPage } from '../pages/ReportsPage';
 import { ProjectsPage } from '../pages/ProjectsPage';
 import { TeamPage } from '../pages/TeamPage';
 import { IntegrationsPage } from '../pages/IntegrationsPage';
-import { BillingPage } from '../pages/BillingPage';
 import { SettingsPage } from '../pages/SettingsPage';
 import { DesignSystemPage } from '../pages/DesignSystemPage';
 
@@ -19,7 +18,6 @@ import { DesignSystemPage } from '../pages/DesignSystemPage';
 import { PublicLandingPage } from '../pages/PublicLandingPage';
 import { PublicFeaturesPage } from '../pages/PublicFeaturesPage';
 import { PublicHowItWorksPage } from '../pages/PublicHowItWorksPage';
-import { PublicPricingPage } from '../pages/PublicPricingPage';
 import { PublicSecurityPage } from '../pages/PublicSecurityPage';
 import { PublicAboutPage } from '../pages/PublicAboutPage';
 import { PublicContactPage } from '../pages/PublicContactPage';
@@ -36,6 +34,7 @@ import { OnboardingPage } from '../pages/OnboardingPage';
 import { AccountSuspendedPage } from '../pages/AccountSuspendedPage';
 import { AcceptInvitationPage } from '../pages/AcceptInvitationPage';
 import { Sparkles, Loader2 } from 'lucide-react';
+import { supabase } from '../supabaseClient';
 
 export const Router: React.FC = () => {
   const { authStatus, isLoading } = useAuth();
@@ -80,6 +79,17 @@ export const Router: React.FC = () => {
   // Extract base route path without query params or hash fragment for matching
   const routePath = currentRoute.split('?')[0].split('#')[0];
 
+  // Protect private pages (/app/*) with supabase.auth.getSession()
+  useEffect(() => {
+    if (routePath.startsWith('/app')) {
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        if (!session) {
+          navigate(ROUTES.LOGIN);
+        }
+      });
+    }
+  }, [routePath]);
+
   // Global Loading Splash during initial auth verification
   if (isLoading) {
     return (
@@ -111,9 +121,6 @@ export const Router: React.FC = () => {
   }
   if (routePath === ROUTES.HOW_IT_WORKS) {
     return <PublicHowItWorksPage onNavigate={navigate} />;
-  }
-  if (routePath === ROUTES.PRICING) {
-    return <PublicPricingPage onNavigate={navigate} />;
   }
   if (routePath === ROUTES.SECURITY) {
     return <PublicSecurityPage onNavigate={navigate} />;
@@ -221,8 +228,6 @@ export const Router: React.FC = () => {
           return <TeamPage onNavigate={navigate} />;
         case ROUTES.INTEGRATIONS:
           return <IntegrationsPage onNavigate={navigate} />;
-        case ROUTES.BILLING:
-          return <BillingPage onNavigate={navigate} />;
         case ROUTES.SETTINGS:
           return <SettingsPage onNavigate={navigate} />;
         case ROUTES.DESIGN_SYSTEM:

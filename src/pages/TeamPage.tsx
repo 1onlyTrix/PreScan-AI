@@ -34,9 +34,6 @@ import { Badge } from '../components/ui/Badge';
 import { useAuth } from '../context/AuthContext';
 import { apiFetch } from '../lib/api';
 import { useToast } from '../components/ui/Toast';
-import { BillingService } from '../services/billing.service';
-import { BillingSummary } from '../types/billing';
-import { UpgradeModal } from '../components/billing/UpgradeModal';
 
 interface TeamMember {
   id: string;
@@ -94,10 +91,6 @@ export const TeamPage: React.FC<TeamPageProps> = ({ onNavigate }) => {
   const [auditLogs, setAuditLogs] = useState<AuditLogItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Billing & Seats State
-  const [billingSummary, setBillingSummary] = useState<BillingSummary | null>(null);
-  const [isUpgradeModalOpen, setIsUpgradeModalOpen] = useState(false);
-
   // Invite Modal State
   const [isInviteOpen, setIsInviteOpen] = useState(false);
   const [inviteEmail, setInviteEmail] = useState('');
@@ -128,11 +121,10 @@ export const TeamPage: React.FC<TeamPageProps> = ({ onNavigate }) => {
     if (!organization?.id) return;
     try {
       setIsLoading(true);
-      const [membersRes, invitesRes, auditRes, billSum] = await Promise.all([
+      const [membersRes, invitesRes, auditRes] = await Promise.all([
         apiFetch(`/api/workspaces/${organization.id}/members`),
         canManageTeam ? apiFetch(`/api/workspaces/${organization.id}/invitations`) : Promise.resolve(null),
         apiFetch(`/api/workspaces/${organization.id}/audit-logs`),
-        BillingService.getBillingSummary(organization.id).catch(() => null),
       ]);
 
       if (membersRes.ok) {
@@ -148,10 +140,6 @@ export const TeamPage: React.FC<TeamPageProps> = ({ onNavigate }) => {
       if (auditRes.ok) {
         const data = await auditRes.json();
         setAuditLogs(data.logs || []);
-      }
-
-      if (billSum) {
-        setBillingSummary(billSum);
       }
     } catch (err) {
       console.error('Failed to fetch team data:', err);
@@ -385,35 +373,14 @@ export const TeamPage: React.FC<TeamPageProps> = ({ onNavigate }) => {
             <div className="flex items-center gap-2 flex-wrap">
               <h2 className="text-lg font-bold text-neutral-900">{organization?.name || 'Workspace'}</h2>
               {formatRoleBadge(currentUserRole)}
-              {billingSummary && (
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-neutral-100 text-neutral-800 border border-neutral-200">
-                  <Users2 className="w-3 h-3 text-neutral-500" />
-                  {members.length} / {billingSummary.team.maxMembers} Seats ({billingSummary.plan.name})
-                </span>
-              )}
             </div>
             <p className="text-xs text-neutral-500 mt-0.5">
               Multi-tenant isolated team workspace • {members.length} {members.length === 1 ? 'member' : 'members'}
-              {billingSummary && !billingSummary.team.canAddMember && (
-                <span className="text-amber-700 font-semibold ml-2">
-                  • Seat capacity reached
-                </span>
-              )}
             </p>
           </div>
         </div>
 
         <div className="flex items-center gap-2 w-full sm:w-auto">
-          {billingSummary && !billingSummary.team.canAddMember && canManageTeam && (
-            <Button
-              variant="outline"
-              size="sm"
-              className="border-amber-300 bg-amber-50 text-amber-900 hover:bg-amber-100"
-              onClick={() => setIsUpgradeModalOpen(true)}
-            >
-              Upgrade for More Seats
-            </Button>
-          )}
           {canManageTeam && (
             <Button
               variant="outline"
@@ -957,40 +924,6 @@ export const TeamPage: React.FC<TeamPageProps> = ({ onNavigate }) => {
               </Button>
             </div>
           </div>
-        ) : billingSummary && !billingSummary.team.canAddMember ? (
-          <div className="space-y-4 py-2">
-            <div className="p-4 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-xs space-y-2">
-              <p className="font-bold text-sm text-amber-950">Workspace Seat Limit Reached</p>
-              <p className="text-amber-800 leading-relaxed">
-                Your workspace is on the <strong>{billingSummary.plan.name}</strong> plan which includes up to <strong>{billingSummary.team.maxMembers} members</strong>. You currently have {members.length} active seats.
-              </p>
-              <p className="text-amber-800">
-                To invite additional teammates, please upgrade your workspace plan to Pro (10 members) or Business (25 members).
-              </p>
-            </div>
-
-            <div className="flex justify-end gap-2 pt-3 border-t border-neutral-100">
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                onClick={() => setIsInviteOpen(false)}
-              >
-                Close
-              </Button>
-              <Button
-                type="button"
-                variant="primary"
-                size="sm"
-                onClick={() => {
-                  setIsInviteOpen(false);
-                  setIsUpgradeModalOpen(true);
-                }}
-              >
-                Upgrade Workspace
-              </Button>
-            </div>
-          </div>
         ) : (
           <form onSubmit={handleSendInvite} className="space-y-4">
             <Input
@@ -1132,14 +1065,6 @@ export const TeamPage: React.FC<TeamPageProps> = ({ onNavigate }) => {
           </Button>
         </div>
       </Dialog>
-
-      {/* Upgrade Modal */}
-      <UpgradeModal
-        isOpen={isUpgradeModalOpen}
-        onClose={() => setIsUpgradeModalOpen(false)}
-        onSuccess={() => loadData()}
-        triggerReason="Team Seat Capacity Limit"
-      />
     </div>
   );
 };

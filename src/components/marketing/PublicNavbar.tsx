@@ -42,7 +42,6 @@ export const PublicNavbar: React.FC<PublicNavbarProps> = ({ currentRoute, onNavi
   const navLinks = [
     { label: 'Features', route: ROUTES.FEATURES },
     { label: 'How it works', route: ROUTES.HOW_IT_WORKS },
-    { label: 'Pricing', route: ROUTES.PRICING },
     { label: 'Security', route: ROUTES.SECURITY },
   ];
 
