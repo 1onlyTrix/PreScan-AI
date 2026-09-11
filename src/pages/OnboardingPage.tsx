@@ -154,6 +154,19 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ onNavigate }) =>
   return (
     <div className="min-h-screen bg-neutral-50 flex flex-col justify-center items-center p-4 sm:p-6 text-neutral-900">
       <div className="w-full max-w-xl space-y-6">
+        {/* Navigation back to public home screen */}
+        <div className="flex items-center justify-between">
+          <button
+            type="button"
+            onClick={() => onNavigate(ROUTES.HOME)}
+            className="inline-flex items-center gap-1.5 text-xs font-medium text-neutral-500 hover:text-neutral-900 transition-colors py-1 px-2 -ml-2 rounded-md hover:bg-neutral-200/50"
+            aria-label="Return to Home"
+          >
+            <ArrowLeft className="w-3.5 h-3.5" />
+            <span>Home</span>
+          </button>
+        </div>
+
         {/* Header Branding & Progress */}
         <div className="text-center space-y-2">
           <div className="w-10 h-10 rounded-xl bg-neutral-900 text-white flex items-center justify-center font-bold text-base shadow-sm mx-auto">

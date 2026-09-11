@@ -111,7 +111,6 @@ export const Router: React.FC = () => {
       }
     } else if (authStatus === 'AUTHENTICATED_ONBOARDING') {
       if (
-        routePath === ROUTES.HOME ||
         routePath === ROUTES.LOGIN ||
         routePath === ROUTES.SIGNUP ||
         routePath === ROUTES.AUTH_CALLBACK ||
@@ -175,9 +174,6 @@ export const Router: React.FC = () => {
           <DashboardPage onNavigate={navigate} />
         </AppShell>
       );
-    }
-    if (authStatus === 'AUTHENTICATED_ONBOARDING') {
-      return <OnboardingPage onNavigate={navigate} />;
     }
     return <PublicLandingPage onNavigate={navigate} />;
   }
