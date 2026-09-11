@@ -1,3 +1,5 @@
+import { supabase } from '../supabaseClient';
+
 export const TOKEN_STORAGE_KEY = 'prescan_auth_token';
 export const WORKSPACE_STORAGE_KEY = 'prescan_active_workspace';
 
@@ -46,6 +48,25 @@ export function getStoredToken(): string | null {
   } catch {
     return null;
   }
+}
+
+/**
+ * Asynchronously retrieve a fresh, valid authentication token from Supabase session,
+ * syncing with localStorage and falling back to stored token.
+ */
+export async function getValidAuthToken(): Promise<string | null> {
+  try {
+    if (typeof window !== 'undefined' && supabase?.auth) {
+      const { data } = await supabase.auth.getSession();
+      if (data?.session?.access_token) {
+        setStoredToken(data.session.access_token);
+        return data.session.access_token;
+      }
+    }
+  } catch {
+    // Fall back to stored token
+  }
+  return getStoredToken();
 }
 
 /**
@@ -117,7 +138,7 @@ export function getAuthHeaders(extraHeaders: Record<string, string> = {}): Recor
  */
 export async function apiFetch(url: string, options: RequestInit = {}): Promise<Response> {
   const targetUrl = getApiUrl(url);
-  const token = getStoredToken();
+  const token = (await getValidAuthToken()) || getStoredToken();
   const activeWsId = getStoredWorkspaceId();
   const headers = new Headers(options.headers || {});
 

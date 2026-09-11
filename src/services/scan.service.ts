@@ -1,5 +1,5 @@
 import { Scan, IngestionJob, IngestionLog } from '../types/models';
-import { apiFetch, getStoredToken, getStoredWorkspaceId, getApiUrl } from '../lib/api';
+import { apiFetch, getStoredToken, getValidAuthToken, getStoredWorkspaceId, getApiUrl } from '../lib/api';
 
 export interface ScanListResponse {
   scans: Scan[];
@@ -102,12 +102,12 @@ export const ScanService = {
     formData: FormData,
     onProgress?: (progressPercent: number) => void
   ): Promise<{ scan: Scan; job: IngestionJob }> {
+    const token = (await getValidAuthToken()) || getStoredToken();
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       xhr.open('POST', getApiUrl('/api/scans/upload'));
       xhr.withCredentials = true;
 
-      const token = getStoredToken();
       if (token) {
         xhr.setRequestHeader('Authorization', `Bearer ${token}`);
         if (token.startsWith('demo_')) {

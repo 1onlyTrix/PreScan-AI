@@ -1,5 +1,6 @@
 import crypto from 'crypto';
 import { Request, Response, NextFunction } from 'express';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { db, DbUser, DbSession, DbOrganization, DbMembership } from './db';
 
 // Extend Express Request type with authenticated user & workspace context
@@ -12,6 +13,36 @@ declare global {
       membership?: DbMembership;
     }
   }
+}
+
+// Supabase server-side client configuration
+const SUPABASE_URL = (
+  process.env.SUPABASE_URL ||
+  process.env.VITE_SUPABASE_URL ||
+  'https://pfoabzazqeriydhkqizr.supabase.co'
+).trim();
+
+const SUPABASE_KEY = (
+  process.env.SUPABASE_SERVICE_ROLE_KEY ||
+  process.env.SUPABASE_ANON_KEY ||
+  process.env.SUPABASE_KEY ||
+  process.env.VITE_SUPABASE_PUBLIC_KEY ||
+  process.env.VITE_SUPABASE_ANON_KEY ||
+  'sb_publishable_IyoKj6gJLQ7XISQOghMp-Q_gxyd7t03'
+).trim();
+
+let supabaseServerClient: SupabaseClient | null = null;
+
+export function getSupabaseServerClient(): SupabaseClient {
+  if (!supabaseServerClient) {
+    supabaseServerClient = createClient(SUPABASE_URL, SUPABASE_KEY, {
+      auth: {
+        persistSession: false,
+        autoRefreshToken: false,
+      },
+    });
+  }
+  return supabaseServerClient;
 }
 
 /**
@@ -93,269 +124,432 @@ export function rateLimit(options: { windowMs: number; max: number; message: str
 }
 
 /**
- * Require valid authenticated session (supports both production sessions and demo sessions)
+ * Require valid authenticated session (supports Supabase JWTs, local sessions, and demo sessions)
  */
-export function requireAuth(req: Request, res: Response, next: NextFunction) {
-  // Check cookie first, then fallback to Authorization header
-  let token = req.cookies?.['prescan_session'];
-  if (!token && req.headers.authorization?.startsWith('Bearer ')) {
-    token = req.headers.authorization.substring(7).trim();
-  }
-
-  // Support demo authentication token or header
-  const demoHeader = (req.headers['x-demo-user'] || req.headers['x-user-email']) as string | undefined;
-
-  if (token && token.startsWith('demo_')) {
-    const rawIdentifier = token.replace(/^demo_/, '').trim();
-    const isEmail = rawIdentifier.includes('@');
-    const email = isEmail ? rawIdentifier.toLowerCase() : `${rawIdentifier.toLowerCase()}@prescan.demo`;
-    const userId = isEmail ? `usr_${email.replace(/[^a-zA-Z0-9]/g, '_')}` : `usr_${rawIdentifier}`;
-    const displayName = email.split('@')[0] || 'Demo Creator';
-
-    let user = db.findUserByEmail(email) || db.findUserById(userId);
-    if (!user) {
-      user = db.createUser({
-        id: userId,
-        email: email,
-        fullName: displayName,
-        displayName: displayName,
-        emailVerified: true,
-        passwordHash: 'demohash',
-        passwordSalt: 'demosalt',
-        status: 'ACTIVE',
-        termsAcceptedAt: new Date().toISOString(),
-        privacyAcceptedAt: new Date().toISOString(),
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      });
+export async function requireAuth(req: Request, res: Response, next: NextFunction) {
+  try {
+    // 1. Extract Bearer token or session cookie
+    let token = req.cookies?.['prescan_session'];
+    if (!token && req.headers.authorization?.startsWith('Bearer ')) {
+      token = req.headers.authorization.substring(7).trim();
     }
 
-    const targetOrgId = (req.headers['x-workspace-id'] || req.headers['x-organization-id']) as string | undefined;
-    if (targetOrgId) {
-      let org = db.findOrganizationById(targetOrgId);
-      if (!org) {
-        org = db.createOrganization({
-          id: targetOrgId,
-          name: `${user.displayName}'s Workspace`,
-          slug: 'workspace',
-          createdById: user.id,
-          ownerId: user.id,
+    const demoHeader = (req.headers['x-demo-user'] || req.headers['x-user-email']) as string | undefined;
+
+    // 2. Handle explicit demo tokens
+    if (token && token.startsWith('demo_')) {
+      const rawIdentifier = token.replace(/^demo_/, '').trim();
+      const isEmail = rawIdentifier.includes('@');
+      const email = isEmail ? rawIdentifier.toLowerCase() : `${rawIdentifier.toLowerCase()}@prescan.demo`;
+      const userId = isEmail ? `usr_${email.replace(/[^a-zA-Z0-9]/g, '_')}` : `usr_${rawIdentifier}`;
+      const displayName = email.split('@')[0] || 'Demo Creator';
+
+      let user = db.findUserByEmail(email) || db.findUserById(userId);
+      if (!user) {
+        user = db.createUser({
+          id: userId,
+          email: email,
+          fullName: displayName,
+          displayName: displayName,
+          emailVerified: true,
+          passwordHash: 'demohash',
+          passwordSalt: 'demosalt',
+          status: 'ACTIVE',
+          termsAcceptedAt: new Date().toISOString(),
+          privacyAcceptedAt: new Date().toISOString(),
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
         });
       }
-      let mem = db.findMembership(targetOrgId, user.id);
-      if (!mem) {
-        db.createMembership({
-          id: `mem_${user.id}_${targetOrgId}`,
-          organizationId: targetOrgId,
-          userId: user.id,
-          role: 'OWNER',
-          joinedAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-        });
-      }
-      req.workspace = org;
-    } else {
-      const userOrgs = db.findOrganizationsByUserId(user.id);
-      if (userOrgs.length === 0) {
-        const defaultOrg = db.createOrganization({
-          id: `ws_${user.id}`,
-          name: `${user.displayName}'s Workspace`,
-          slug: 'workspace',
-          createdById: user.id,
-          ownerId: user.id,
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-        });
-        db.createMembership({
-          id: `mem_${user.id}_${defaultOrg.id}`,
-          organizationId: defaultOrg.id,
-          userId: user.id,
-          role: 'OWNER',
-          joinedAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-        });
-        db.updateUser(user.id, { defaultOrganizationId: defaultOrg.id });
-        req.workspace = defaultOrg;
+
+      const targetOrgId = ((req.headers['x-workspace-id'] || req.headers['x-organization-id']) as string | undefined)?.trim();
+      let workspace: DbOrganization | undefined;
+      let membership: DbMembership | undefined;
+
+      if (targetOrgId) {
+        workspace = db.findOrganizationById(targetOrgId);
+        if (!workspace) {
+          workspace = db.createOrganization({
+            id: targetOrgId,
+            name: `${user.displayName}'s Workspace`,
+            slug: 'workspace',
+            createdById: user.id,
+            ownerId: user.id,
+            status: 'ACTIVE',
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+          });
+        }
+        membership = db.findMembership(targetOrgId, user.id);
+        if (!membership) {
+          membership = db.createMembership({
+            id: `mem_${user.id}_${targetOrgId}`,
+            organizationId: targetOrgId,
+            userId: user.id,
+            role: 'OWNER',
+            status: 'ACTIVE',
+            joinedAt: new Date().toISOString(),
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+          });
+        }
+        req.workspace = workspace;
+        req.membership = membership;
       } else {
-        req.workspace = userOrgs[0];
+        const userOrgs = db.findOrganizationsByUserId(user.id);
+        if (userOrgs.length === 0) {
+          const defaultOrg = db.createOrganization({
+            id: `ws_${user.id}`,
+            name: `${user.displayName}'s Workspace`,
+            slug: 'workspace',
+            createdById: user.id,
+            ownerId: user.id,
+            status: 'ACTIVE',
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+          });
+          membership = db.createMembership({
+            id: `mem_${user.id}_${defaultOrg.id}`,
+            organizationId: defaultOrg.id,
+            userId: user.id,
+            role: 'OWNER',
+            status: 'ACTIVE',
+            joinedAt: new Date().toISOString(),
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+          });
+          db.updateUser(user.id, { defaultOrganizationId: defaultOrg.id });
+          req.workspace = defaultOrg;
+          req.membership = membership;
+        } else {
+          req.workspace = userOrgs[0];
+          req.membership = db.findMembership(userOrgs[0].id, user.id) || undefined;
+        }
       }
-    }
 
-    req.user = user;
-    req.session = {
-      token,
-      userId: user.id,
-      expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
-      createdAt: new Date().toISOString(),
-    };
-    return next();
-  }
-
-  if (!token && demoHeader) {
-    const email = demoHeader.toLowerCase();
-    const userId = `usr_${email.replace(/[^a-zA-Z0-9]/g, '_')}`;
-    const displayName = email.split('@')[0] || 'Demo Creator';
-
-    let user = db.findUserByEmail(email) || db.findUserById(userId);
-    if (!user) {
-      user = db.createUser({
-        id: userId,
-        email: email,
-        fullName: displayName,
-        displayName: displayName,
-        emailVerified: true,
-        passwordHash: 'demohash',
-        passwordSalt: 'demosalt',
-        status: 'ACTIVE',
-        termsAcceptedAt: new Date().toISOString(),
-        privacyAcceptedAt: new Date().toISOString(),
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      });
-    }
-
-    const userOrgs = db.findOrganizationsByUserId(user.id);
-    if (userOrgs.length === 0) {
-      const defaultOrg = db.createOrganization({
-        id: `ws_${user.id}`,
-        name: `${user.displayName}'s Workspace`,
-        slug: 'workspace',
-        createdById: user.id,
-        ownerId: user.id,
-        status: 'ACTIVE',
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      });
-      db.createMembership({
-        id: `mem_${user.id}_${defaultOrg.id}`,
-        organizationId: defaultOrg.id,
-        userId: user.id,
-        role: 'OWNER',
-        status: 'ACTIVE',
-        joinedAt: new Date().toISOString(),
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      });
-      db.updateUser(user.id, { defaultOrganizationId: defaultOrg.id });
-      req.workspace = defaultOrg;
-    } else {
-      req.workspace = userOrgs[0];
-    }
-
-    req.user = user;
-    req.session = {
-      token: `demo_${userId}`,
-      userId: user.id,
-      expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
-      createdAt: new Date().toISOString(),
-    };
-    return next();
-  }
-
-  if (!token) {
-    // If running in demo mode, fallback to active user or demo creator
-    const allUsers = db.findAllUsers();
-    let fallbackUser = allUsers.find((u) => u.status === 'ACTIVE') || db.findUserByEmail('creator@prescan.dev');
-    if (!fallbackUser && allUsers.length > 0) {
-      fallbackUser = allUsers[0];
-    }
-    if (!fallbackUser) {
-      fallbackUser = db.createUser({
-        id: 'usr_demo_creator',
-        email: 'creator@prescan.dev',
-        fullName: 'Demo Creator',
-        displayName: 'Demo Creator',
-        emailVerified: true,
-        passwordHash: 'demohash',
-        passwordSalt: 'demosalt',
-        status: 'ACTIVE',
-        termsAcceptedAt: new Date().toISOString(),
-        privacyAcceptedAt: new Date().toISOString(),
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      });
-    }
-
-    if (fallbackUser) {
-      let orgs = db.findOrganizationsByUserId(fallbackUser.id);
-      let defaultOrg = orgs[0];
-      if (!defaultOrg) {
-        defaultOrg = db.createOrganization({
-          id: `org_${fallbackUser.id}`,
-          name: `${fallbackUser.displayName || 'Creator'}'s Workspace`,
-          slug: 'workspace',
-          ownerId: fallbackUser.id,
-          createdById: fallbackUser.id,
-          status: 'ACTIVE',
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-        });
-        db.createMembership({
-          id: `mem_${fallbackUser.id}_${defaultOrg.id}`,
-          organizationId: defaultOrg.id,
-          userId: fallbackUser.id,
-          role: 'OWNER',
-          status: 'ACTIVE',
-          joinedAt: new Date().toISOString(),
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-        });
-        fallbackUser.defaultOrganizationId = defaultOrg.id;
-      }
-      req.user = fallbackUser;
-      req.workspace = defaultOrg;
+      req.user = user;
       req.session = {
-        token: `demo_${fallbackUser.id}`,
-        userId: fallbackUser.id,
-        expiresAt: new Date(Date.now() + 86400000).toISOString(),
+        token,
+        userId: user.id,
+        expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
         createdAt: new Date().toISOString(),
       };
       return next();
     }
 
-    return res.status(401).json({
-      error: 'Authentication required. Please log in to continue.',
-      code: 'UNAUTHENTICATED',
+    // 3. Handle explicit demo headers when no token was provided
+    if (!token && demoHeader) {
+      const email = demoHeader.toLowerCase();
+      const userId = `usr_${email.replace(/[^a-zA-Z0-9]/g, '_')}`;
+      const displayName = email.split('@')[0] || 'Demo Creator';
+
+      let user = db.findUserByEmail(email) || db.findUserById(userId);
+      if (!user) {
+        user = db.createUser({
+          id: userId,
+          email: email,
+          fullName: displayName,
+          displayName: displayName,
+          emailVerified: true,
+          passwordHash: 'demohash',
+          passwordSalt: 'demosalt',
+          status: 'ACTIVE',
+          termsAcceptedAt: new Date().toISOString(),
+          privacyAcceptedAt: new Date().toISOString(),
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        });
+      }
+
+      const userOrgs = db.findOrganizationsByUserId(user.id);
+      let workspace: DbOrganization;
+      let membership: DbMembership | undefined;
+
+      if (userOrgs.length === 0) {
+        workspace = db.createOrganization({
+          id: `ws_${user.id}`,
+          name: `${user.displayName}'s Workspace`,
+          slug: 'workspace',
+          createdById: user.id,
+          ownerId: user.id,
+          status: 'ACTIVE',
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        });
+        membership = db.createMembership({
+          id: `mem_${user.id}_${workspace.id}`,
+          organizationId: workspace.id,
+          userId: user.id,
+          role: 'OWNER',
+          status: 'ACTIVE',
+          joinedAt: new Date().toISOString(),
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        });
+        db.updateUser(user.id, { defaultOrganizationId: workspace.id });
+      } else {
+        workspace = userOrgs[0];
+        membership = db.findMembership(workspace.id, user.id);
+      }
+
+      req.workspace = workspace;
+      req.membership = membership;
+      req.user = user;
+      req.session = {
+        token: `demo_${userId}`,
+        userId: user.id,
+        expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
+        createdAt: new Date().toISOString(),
+      };
+      return next();
+    }
+
+    // 4. If no token is provided at all, reject with 401
+    if (!token) {
+      return res.status(401).json({
+        error: 'Authentication required. Please log in to continue.',
+        code: 'UNAUTHENTICATED',
+      });
+    }
+
+    // 5. Try Supabase JWT validation if token has JWT structure or is not a local session token
+    const looksLikeJwt = token.includes('.') && token.split('.').length === 3;
+    if (looksLikeJwt) {
+      try {
+        const supabase = getSupabaseServerClient();
+        const { data, error } = await supabase.auth.getUser(token);
+
+        if (!error && data?.user) {
+          const sbUser = data.user;
+          const email = (sbUser.email || '').toLowerCase().trim();
+          const fullName = (
+            sbUser.user_metadata?.full_name ||
+            sbUser.user_metadata?.name ||
+            email.split('@')[0] ||
+            'Creator'
+          ).trim();
+          const displayName = (sbUser.user_metadata?.name || fullName).trim();
+          const isVerified = Boolean(
+            sbUser.email_confirmed_at ||
+            sbUser.app_metadata?.provider === 'google' ||
+            (sbUser.identities && sbUser.identities.some((i: any) => i.provider === 'google'))
+          );
+
+          // Find or create PreScan backend user record
+          let user = db.findUserById(sbUser.id) || (email ? db.findUserByEmail(email) : undefined);
+
+          if (!user) {
+            user = db.createUser({
+              id: sbUser.id,
+              email: email || `${sbUser.id}@prescan.auth`,
+              fullName: fullName || 'Creator',
+              displayName: displayName || 'Creator',
+              emailVerified: isVerified,
+              passwordHash: 'supabase_auth',
+              passwordSalt: 'supabase_auth',
+              status: 'ACTIVE',
+              termsAcceptedAt: new Date().toISOString(),
+              privacyAcceptedAt: new Date().toISOString(),
+              createdAt: sbUser.created_at || new Date().toISOString(),
+              updatedAt: new Date().toISOString(),
+            });
+          } else {
+            // Update emailVerified status if verified in Supabase
+            if (isVerified && !user.emailVerified) {
+              db.updateUser(user.id, { emailVerified: true });
+              user.emailVerified = true;
+            }
+          }
+
+          if (user.status === 'DELETED') {
+            return res.status(401).json({
+              error: 'Account not found.',
+              code: 'USER_NOT_FOUND',
+            });
+          }
+
+          if (user.status === 'SUSPENDED') {
+            return res.status(403).json({
+              error: 'Your account has been suspended. Please contact support.',
+              code: 'ACCOUNT_SUSPENDED',
+            });
+          }
+
+          // Resolve Workspace / Organization
+          const targetOrgId = ((req.headers['x-workspace-id'] || req.headers['x-organization-id']) as string | undefined)?.trim();
+          let workspace: DbOrganization | undefined;
+          let membership: DbMembership | undefined;
+
+          if (targetOrgId) {
+            workspace = db.findOrganizationById(targetOrgId);
+            if (!workspace) {
+              workspace = db.createOrganization({
+                id: targetOrgId,
+                name: `${user.displayName}'s Workspace`,
+                slug: 'workspace',
+                createdById: user.id,
+                ownerId: user.id,
+                status: 'ACTIVE',
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString(),
+              });
+            }
+            membership = db.findMembership(targetOrgId, user.id);
+            if (!membership) {
+              membership = db.createMembership({
+                id: `mem_${user.id}_${targetOrgId}`,
+                organizationId: targetOrgId,
+                userId: user.id,
+                role: 'OWNER',
+                status: 'ACTIVE',
+                joinedAt: new Date().toISOString(),
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString(),
+              });
+            }
+            if (!user.defaultOrganizationId) {
+              db.updateUser(user.id, { defaultOrganizationId: targetOrgId });
+              user.defaultOrganizationId = targetOrgId;
+            }
+          } else {
+            if (user.defaultOrganizationId) {
+              workspace = db.findOrganizationById(user.defaultOrganizationId);
+            }
+            if (!workspace) {
+              const userOrgs = db.findOrganizationsByUserId(user.id);
+              if (userOrgs.length > 0) {
+                workspace = userOrgs[0];
+              }
+            }
+            if (workspace) {
+              membership = db.findMembership(workspace.id, user.id);
+            } else {
+              const defaultOrgId = `ws_${user.id.replace(/[^a-zA-Z0-9]/g, '_')}`;
+              workspace = db.findOrganizationById(defaultOrgId);
+              if (!workspace) {
+                workspace = db.createOrganization({
+                  id: defaultOrgId,
+                  name: `${user.displayName}'s Workspace`,
+                  slug: 'workspace',
+                  createdById: user.id,
+                  ownerId: user.id,
+                  status: 'ACTIVE',
+                  createdAt: new Date().toISOString(),
+                  updatedAt: new Date().toISOString(),
+                });
+              }
+              membership = db.findMembership(defaultOrgId, user.id);
+              if (!membership) {
+                membership = db.createMembership({
+                  id: `mem_${user.id}_${defaultOrgId}`,
+                  organizationId: defaultOrgId,
+                  userId: user.id,
+                  role: 'OWNER',
+                  status: 'ACTIVE',
+                  joinedAt: new Date().toISOString(),
+                  createdAt: new Date().toISOString(),
+                  updatedAt: new Date().toISOString(),
+                });
+              }
+              db.updateUser(user.id, { defaultOrganizationId: defaultOrgId });
+              user.defaultOrganizationId = defaultOrgId;
+            }
+          }
+
+          if (workspace && !membership) {
+            membership = db.createMembership({
+              id: `mem_${user.id}_${workspace.id}`,
+              organizationId: workspace.id,
+              userId: user.id,
+              role: 'OWNER',
+              status: 'ACTIVE',
+              joinedAt: new Date().toISOString(),
+              createdAt: new Date().toISOString(),
+              updatedAt: new Date().toISOString(),
+            });
+          }
+
+          req.user = user;
+          req.workspace = workspace;
+          req.membership = membership;
+          req.session = {
+            token,
+            userId: user.id,
+            expiresAt: new Date(Date.now() + 3600000).toISOString(),
+            createdAt: new Date().toISOString(),
+          };
+          return next();
+        }
+      } catch (sbErr) {
+        console.error('[Supabase Auth Verification Error]', sbErr);
+      }
+
+      // If token looked like a JWT but failed Supabase verification, return 401
+      res.clearCookie('prescan_session');
+      return res.status(401).json({
+        error: 'Authentication required. Please log in to continue.',
+        code: 'UNAUTHENTICATED',
+      });
+    }
+
+    // 6. Handle local database sessions
+    const session = db.findSession(token);
+    let user: DbUser | undefined;
+
+    if (session) {
+      user = db.findUserById(session.userId);
+    }
+
+    if (!session || !user) {
+      res.clearCookie('prescan_session');
+      return res.status(401).json({
+        error: 'Authentication required. Please log in to continue.',
+        code: 'UNAUTHENTICATED',
+      });
+    }
+
+    if (user.status === 'DELETED') {
+      db.deleteSession(token);
+      res.clearCookie('prescan_session');
+      return res.status(401).json({
+        error: 'Account not found.',
+        code: 'USER_NOT_FOUND',
+      });
+    }
+
+    if (user.status === 'SUSPENDED') {
+      return res.status(403).json({
+        error: 'Your account has been suspended. Please contact support.',
+        code: 'ACCOUNT_SUSPENDED',
+      });
+    }
+
+    // Resolve workspace for local session user
+    const targetOrgId = ((req.headers['x-workspace-id'] || req.headers['x-organization-id']) as string | undefined)?.trim();
+    if (targetOrgId) {
+      req.workspace = db.findOrganizationById(targetOrgId);
+      req.membership = db.findMembership(targetOrgId, user.id);
+    } else if (user.defaultOrganizationId) {
+      req.workspace = db.findOrganizationById(user.defaultOrganizationId);
+      req.membership = req.workspace ? db.findMembership(req.workspace.id, user.id) : undefined;
+    } else {
+      const userOrgs = db.findOrganizationsByUserId(user.id);
+      if (userOrgs.length > 0) {
+        req.workspace = userOrgs[0];
+        req.membership = db.findMembership(userOrgs[0].id, user.id);
+      }
+    }
+
+    req.user = user;
+    req.session = session;
+    return next();
+  } catch (err: any) {
+    console.error('[requireAuth Error]', err);
+    return res.status(500).json({
+      error: 'An internal error occurred while verifying authentication.',
+      code: 'AUTH_INTERNAL_ERROR',
     });
   }
-
-  const session = db.findSession(token);
-  let user: DbUser | undefined;
-
-  if (session) {
-    user = db.findUserById(session.userId);
-  }
-
-  if (!session || !user) {
-    // Clear invalid cookie
-    res.clearCookie('prescan_session');
-    return res.status(401).json({
-      error: 'Authentication required. Please log in to continue.',
-      code: 'UNAUTHENTICATED',
-    });
-  }
-
-  if (user.status === 'DELETED') {
-    db.deleteSession(token);
-    res.clearCookie('prescan_session');
-    return res.status(401).json({
-      error: 'Account not found.',
-      code: 'USER_NOT_FOUND',
-    });
-  }
-
-  if (user.status === 'SUSPENDED') {
-    return res.status(403).json({
-      error: 'Your account has been suspended. Please contact support.',
-      code: 'ACCOUNT_SUSPENDED',
-    });
-  }
-
-  req.user = user;
-  req.session = session;
-  next();
 }
 
 /**
